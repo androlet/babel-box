@@ -17,9 +17,11 @@ export class SearchInputComponent implements OnInit {
   }
 
   submitSearch(): void {
-    this.searchService.searchTerm(this.searchedTerm)
-      .subscribe((results: string[]) => {
-        this.resultsFound.emit(results);
-      });
+    if (!!this.searchedTerm) {
+      this.searchService.searchTerm(this.searchedTerm)
+        .subscribe((results: string[]) => {
+          this.resultsFound.emit(results);
+        });
+    }
   }
 }

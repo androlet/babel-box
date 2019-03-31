@@ -116,8 +116,8 @@ export class SearchInputComponent implements OnInit {
 &nbsp;
   submitSearch(): void {
     this.searchService.searchTerm(this.searchedTerm)
-      .subscribe((results: string[]) =&gt; {
-        this.resultsFound.emit(results);
+      .subscribe((translationProposals: string[]) =&gt; {
+        this.resultsFound.emit(translationProposals);
       });
   }
 }

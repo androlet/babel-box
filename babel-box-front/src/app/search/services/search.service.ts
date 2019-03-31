@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {backendUrl} from '../../constants';
 
 @Injectable()
 export class SearchService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   searchTerm(term: string): Observable<string[]> {
-    return of([]);
+    const params: HttpParams = new HttpParams({fromObject: {searchedTerm: term}});
+    return this.httpClient.get<string[]>(`${backendUrl}/translates/search`, {params});
   }
 }
