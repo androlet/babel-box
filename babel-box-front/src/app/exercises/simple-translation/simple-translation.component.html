@@ -1,0 +1,6 @@
+<section>
+  <div>{{wordToTranslate}}</div>
+  <div><input type="text" ngModel="typedAnswer" /></div>
+  <div class="success-indicator" *ngIf="isRightAnswer()">Success</div>
+  <div class="fail-indicator" *ngIf="isWrongAnswer()">Fail</div>
+</section>
