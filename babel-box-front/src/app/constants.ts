@@ -1,3 +1,3 @@
-const backendUrl = 'http://localhost:8080';
+const BABELBOX_API_ROOT = '/api';
 
-export { backendUrl };
+export { BABELBOX_API_ROOT };
