@@ -1,58 +1,47 @@
-import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SearchInputComponent} from './search-input.component';
-import {Component, ViewChild} from '@angular/core';
 import {SearchService} from '../services/search.service';
 import {of} from 'rxjs';
-import {SearchModule} from '../search.module';
+import {SearchInputComponentTested, SearchModuleTesting} from "../search.module.testing";
 
 describe('SearchInputComponent', () => {
-  let host: HostComponent;
-  let component: SearchInputComponent;
-  let fixture: ComponentFixture<HostComponent>;
+  let component: SearchInputComponentTested;
+  let fixture: ComponentFixture<SearchInputComponentTested>;
 
-  @Component({
-    template: `<app-search-input (resultsFound)="refreshResults($event)"></app-search-input>`
-  })
-  class HostComponent {
-    results: string[];
-    @ViewChild(SearchInputComponent) child;
-    refreshResults(results: string[]) {
-      this.results = results;
-    }
-  }
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [SearchModule],
-      declarations: [ HostComponent ]
-    })
-      .compileComponents();
-  }));
+  let searchService: SearchService;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HostComponent);
-    host = fixture.componentInstance;
-    component = host.child;
+    TestBed.configureTestingModule({
+      imports: [SearchModuleTesting]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(SearchInputComponentTested);
+    component = fixture.componentInstance;
+
+    searchService = TestBed.get(SearchService);
     fixture.detectChanges();
+  });
+
+  beforeEach(() => {
+    spyOn(component.resultsFound, 'emit').and.callThrough();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch search result and emit its', async(inject(
-    [SearchService],
-    (searchService) => {
-      //Given
-      const expectedResults = ['termOne', 'termTwo'];
-      component.searchedTerm = 'searchedTerm';
-      spyOn(searchService, 'searchTerm').and.returnValue(of(expectedResults));
+  it('should fetch search result and emit its', () => {
 
-      //When
-      component.submitSearch();
+    //Given
+    const expectedResults = ['termOne', 'termTwo'];
+    component.searchedTerm = 'searchedTerm';
+    spyOn(searchService, 'searchTerm').and.returnValue(of(expectedResults));
 
-      //Then
-      expect(host.results).toEqual(expectedResults);
-    })));
+    //When
+    component.submitSearch();
+
+    //Then
+    expect(component.resultsFound.emit).toHaveBeenCalledWith(expectedResults);
+  });
 });

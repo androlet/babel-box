@@ -1,30 +1,27 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SimpleTranslationComponent } from './simple-translation.component';
-import {By} from "@angular/platform-browser";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {ExercisesService} from "../services/exercises.service";
+import {SimpleTranslationComponent} from './simple-translation.component';
+import {HttpTestingController} from "@angular/common/http/testing";
+import {ExercisesModuleTesting, SimpleTranslationComponentTested} from "../exercises.module.testing";
 
 describe('SimpleTranslationComponent', () => {
-  let component: SimpleTranslationComponent;
-  let fixture: ComponentFixture<SimpleTranslationComponent>;
+  let component: SimpleTranslationComponentTested;
+  let fixture: ComponentFixture<SimpleTranslationComponentTested>;
   let mockHttp: HttpTestingController;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ SimpleTranslationComponent ],
-      providers: [ExercisesService],
-      imports: [HttpClientTestingModule]
-    })
-    .compileComponents();
+      imports: [
+        ExercisesModuleTesting
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(SimpleTranslationComponentTested);
+    component = fixture.componentInstance;
 
     mockHttp = TestBed.get(HttpTestingController);
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SimpleTranslationComponent);
-    component = fixture.componentInstance;
   });
+
 
   it('should create', () => {
     fixture.detectChanges();
@@ -41,11 +38,10 @@ describe('SimpleTranslationComponent', () => {
 
       //when
       component.typedAnswer = 'test';
-      fixture.detectChanges();
 
       //then
-      expect(fixture.debugElement.query(By.css('.success-indicator')).nativeElement.innerText).toContain('Success');
-      expect(fixture.debugElement.query(By.css('.fail-indicator'))).toBeNull();
+      expect(component.isRightAnswer()).toBe(true);
+      expect(component.isWrongAnswer()).toBe(false);
     });
 
     it('SHOULD advertise learner ' +
@@ -59,8 +55,8 @@ describe('SimpleTranslationComponent', () => {
       fixture.detectChanges();
 
       //then
-      expect(fixture.debugElement.query(By.css('.success-indicator'))).toBeNull();
-      expect(fixture.debugElement.query(By.css('.fail-indicator')).nativeElement.innerText).toContain('Fail');
+      expect(component.isRightAnswer()).toBe(false);
+      expect(component.isWrongAnswer()).toBe(true);
     });
   });
 
