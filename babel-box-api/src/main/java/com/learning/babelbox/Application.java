@@ -42,6 +42,8 @@ public class Application {
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setUrl("jdbc:postgresql://localhost:5432/babelbox");
+        ds.setUsername("thomas");
+        ds.setPassword("sa");
         ds.setDriverClassName("org.postgresql.Driver");
         return ds;
     }
