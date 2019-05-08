@@ -1,6 +1,6 @@
 package com.learning.babelbox.services;
 
-import com.learning.babelbox.connectors.WordReferenceConnector;
+import com.learning.babelbox.connectors.TranslationConnector;
 import com.learning.babelbox.domain.Language;
 import com.learning.babelbox.domain.Translation;
 import com.learning.babelbox.domain.Word;
@@ -19,10 +19,10 @@ public class TranslationService {
     private final TranslationRepository translationRepository;
     private final LanguageService languageService;
     private final WordService wordService;
-    private final WordReferenceConnector wordReferenceConnector;
+    private final TranslationConnector translationConnector;
 
     public TranslationResults getTranslation(String searchedTerm) {
-        String result = wordReferenceConnector.fetch(searchedTerm);
+        String result = translationConnector.fetch(searchedTerm);
         return new TranslationResults(translationRepository.findByOriginalTerm(searchedTerm));
     }
 

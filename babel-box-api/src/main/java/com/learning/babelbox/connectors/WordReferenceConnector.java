@@ -9,11 +9,12 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class WordReferenceConnector {
+public class WordReferenceConnector implements TranslationConnector {
 
     private final String baseUrl = "http://www.wordreference.com";
     private final String langs = "enfr";
 
+    @Override
     public String fetch(String word) {
         String url = new StringBuilder(baseUrl)
                 .append("/")
