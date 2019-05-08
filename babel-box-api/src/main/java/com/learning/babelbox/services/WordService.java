@@ -12,7 +12,7 @@ public class WordService {
 
     private final WordRepository wordRepository;
 
-    public Word create(Language language, String spelling) {
-        return wordRepository.save(new Word(language, spelling));
+    public Word create(Word word) {
+        return wordRepository.save(word);
     }
 }

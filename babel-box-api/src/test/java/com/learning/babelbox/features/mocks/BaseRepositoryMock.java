@@ -1,4 +1,4 @@
-package com.learning.babelbox.mocks;
+package com.learning.babelbox.features.mocks;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,7 @@ public class BaseRepositoryMock<T> implements JpaRepository<T, Long> {
 
     @Override
     public List<T> findAll() {
-        return (List<T>) data.values();
+        return new ArrayList<>(data.values());
     }
 
     @Override

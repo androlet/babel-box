@@ -1,4 +1,4 @@
-package com.learning.babelbox.mocks;
+package com.learning.babelbox.features.mocks;
 
 import com.learning.babelbox.domain.Word;
 import com.learning.babelbox.repository.WordRepository;

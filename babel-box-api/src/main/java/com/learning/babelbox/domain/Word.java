@@ -20,6 +20,8 @@ public class Word extends EntityCore {
     }
 
     public Word(Language language, String spelling, String pronunciation) {
+        this(language, spelling);
+        this.pronunciation = pronunciation;
     }
 
     public Language getLanguage() {

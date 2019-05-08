@@ -1,5 +1,8 @@
 package com.learning.babelbox.connectors;
 
+import com.learning.babelbox.connectors.dto.ConnectorSearchResult;
+import com.learning.babelbox.domain.Language;
+
 public interface TranslationConnector {
-    String fetch(String word);
+    ConnectorSearchResult fetch(Language source, Language target, String word);
 }

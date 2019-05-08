@@ -1,4 +1,4 @@
-package com.learning.babelbox.mocks;
+package com.learning.babelbox.features.mocks;
 
 import com.learning.babelbox.domain.Language;
 import com.learning.babelbox.repository.LanguageRepository;
@@ -9,6 +9,8 @@ public class LanguageRepositoryMock extends BaseRepositoryMock<Language> impleme
 
     @Override
     public Language findByLocaleCode(String localeCode) {
-        return null;
+        return data.values().stream()
+                .filter(language -> language.getLocaleCode().equals(localeCode))
+                .findFirst().get();
     }
 }

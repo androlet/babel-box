@@ -9,13 +9,10 @@ import java.util.stream.Collectors;
 
 public class TranslationBuilder {
 
-    private static final Language initial = new Language("en");
-    private static final Language targeted = new Language("fr");
-
-    public static List<Translation> buildFrom(String searchecTerm, List<String> translations) {
-        Word originalWord = new Word(initial, searchecTerm);
+    public static List<Translation> buildFrom(Language source, Language target, String searchecTerm, List<String> translations) {
+        Word originalWord = new Word(source, searchecTerm);
         return translations.stream()
-                .map(translation -> new Translation(originalWord, new Word(targeted, translation)))
+                .map(translation -> new Translation(originalWord, new Word(target, translation)))
                 .collect(Collectors.toList());
     }
 }

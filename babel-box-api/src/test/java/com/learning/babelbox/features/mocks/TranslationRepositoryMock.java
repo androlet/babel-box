@@ -1,4 +1,4 @@
-package com.learning.babelbox.mocks;
+package com.learning.babelbox.features.mocks;
 
 import com.learning.babelbox.domain.Translation;
 import com.learning.babelbox.repository.TranslationRepository;

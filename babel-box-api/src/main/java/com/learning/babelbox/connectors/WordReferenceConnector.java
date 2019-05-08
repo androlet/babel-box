@@ -1,33 +1,65 @@
 package com.learning.babelbox.connectors;
 
+import com.learning.babelbox.connectors.dto.ConnectorSearchResult;
+import com.learning.babelbox.domain.Language;
+import com.learning.babelbox.domain.Translation;
+import com.learning.babelbox.domain.Word;
 import lombok.RequiredArgsConstructor;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class WordReferenceConnector implements TranslationConnector {
 
-    private final String baseUrl = "http://www.wordreference.com";
-    private final String langs = "enfr";
+    private static final String BASE_URL = "https://www.wordreference.com";
 
-    @Override
-    public String fetch(String word) {
-        String url = new StringBuilder(baseUrl)
+    private final HtmlParser htmlParser;
+
+    private String buildUrl(Language source, Language target, String word) {
+        return new StringBuilder(BASE_URL)
                 .append("/")
-                .append(langs)
+                .append(source.getLocaleCode() + target.getLocaleCode())
                 .append("/")
                 .append(word)
                 .toString();
-        Document document;
+    }
+
+    private String retrieveText(String rawContent) {
+        return rawContent.replaceAll("[\\[\\]]", "").split("<")[0];
+    }
+
+    private String retrieveOriginalWord(Document document) {
+        return document.select("h3.headerWord").html();
+    }
+
+    private String retrievePrononciation(Document document) {
+        return retrieveText(document.select("#pronWR").html());
+    }
+
+    private Elements retrieveElementTranslation(Document document) {
+        return document.select("tr.odd, tr.even > td.ToWrd");
+    }
+
+    @Override
+    public ConnectorSearchResult fetch(Language source, Language target, String word) {
+        String url = buildUrl(source, target, word);
         try {
-            document = Jsoup.connect(url).get();
-            return document.title();
+            Document document = htmlParser.download(url);
+            return new ConnectorSearchResult(
+                retrieveOriginalWord(document),
+                retrievePrononciation(document),
+                retrieveElementTranslation(document).subList(0, 10).stream()
+                        .map(element -> retrieveText(element.html()))
+                        .collect(Collectors.toList())
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 }

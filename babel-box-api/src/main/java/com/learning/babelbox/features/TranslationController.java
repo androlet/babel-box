@@ -24,7 +24,11 @@ public class TranslationController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public TranslationResults getTranslation(@RequestParam(required = false) String searchedTerm) {
-        return translationService.getTranslation(searchedTerm);
+    public TranslationResults getTranslations(@RequestParam(required = false) String searchedTerm) {
+        return translationService.getTranslationResults(
+                languageService.getLanguage("en"),
+                languageService.getLanguage("fr"),
+                searchedTerm
+        );
     }
 }
