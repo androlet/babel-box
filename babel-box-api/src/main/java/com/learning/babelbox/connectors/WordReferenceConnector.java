@@ -5,6 +5,7 @@ import com.learning.babelbox.domain.Language;
 import com.learning.babelbox.domain.Translation;
 import com.learning.babelbox.domain.Word;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,9 @@ public class WordReferenceConnector implements TranslationConnector {
     }
 
     private String retrieveText(String rawContent) {
-        return rawContent.replaceAll("[\\[\\]]", "").split("<")[0];
+        return StringEscapeUtils.unescapeHtml4(rawContent
+                .replaceAll("[\\[\\]]", "")
+                .split("<")[0]).trim();
     }
 
     private String retrieveOriginalWord(Document document) {
@@ -42,7 +45,7 @@ public class WordReferenceConnector implements TranslationConnector {
     }
 
     private Elements retrieveElementTranslation(Document document) {
-        return document.select("tr.odd, tr.even > td.ToWrd");
+        return document.select("tr.odd > td.ToWrd, tr.even > td.ToWrd");
     }
 
     @Override

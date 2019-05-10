@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 public class TranslationResults {
 
     private Word originalTerm;
-    private List<String> translationTerms;
+    private List<String> significations;
 
     public TranslationResults(List<Translation> translations) {
-        translationTerms = translations.stream()
-                .map(translation -> translation.getTranslatedTerm().getSpelling())
+        significations = translations.stream()
+                .map(translation -> translation.getSignification().getDescription())
                 .collect(Collectors.toList());
         originalTerm = translations.get(0).getOriginalTerm();
     }
@@ -22,7 +22,7 @@ public class TranslationResults {
         return originalTerm;
     }
 
-    public List<String> getTranslationTerms() {
-        return translationTerms;
+    public List<String> getSignifications() {
+        return significations;
     }
 }

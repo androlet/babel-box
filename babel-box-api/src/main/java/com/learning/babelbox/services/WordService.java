@@ -1,6 +1,5 @@
 package com.learning.babelbox.services;
 
-import com.learning.babelbox.domain.Language;
 import com.learning.babelbox.domain.Word;
 import com.learning.babelbox.repository.WordRepository;
 import lombok.RequiredArgsConstructor;

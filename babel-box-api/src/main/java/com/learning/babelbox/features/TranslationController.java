@@ -17,12 +17,6 @@ public class TranslationController {
     private final TranslationService translationService;
     private final LanguageService languageService;
 
-    @RequestMapping(value = "/generates", method = RequestMethod.GET)
-    public void generateTranslations() {
-        languageService.initLanguages("en", "fr");
-        translationService.generates();
-    }
-
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public TranslationResults getTranslations(@RequestParam(required = false) String searchedTerm) {
         return translationService.getTranslationResults(

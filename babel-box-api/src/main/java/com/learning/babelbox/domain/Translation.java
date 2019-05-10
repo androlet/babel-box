@@ -13,18 +13,18 @@ public class Translation extends EntityCore {
     @ManyToOne
     private Word originalTerm;
     @ManyToOne
-    private Word translatedTerm;
+    private Signification signification;
 
-    public Translation(Word originalTerm, Word translatedTerm) {
+    public Translation(Word originalTerm, Signification signification) {
         this.originalTerm = originalTerm;
-        this.translatedTerm = translatedTerm;
+        this.signification = signification;
     }
 
     public Word getOriginalTerm() {
         return originalTerm;
     }
 
-    public Word getTranslatedTerm() {
-        return translatedTerm;
+    public Signification getSignification() {
+        return signification;
     }
 }

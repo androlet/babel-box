@@ -29,7 +29,7 @@ public class TranslationTest extends CommonTest {
         TranslationResults results = translationController.getTranslations(searchedTerm);
 
         //Then
-        assertThat(results.getTranslationTerms()).isEqualTo(expectedTranslations);
+        assertThat(results.getSignifications()).isEqualTo(expectedTranslations);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class TranslationTest extends CommonTest {
         TranslationResults results = translationController.getTranslations(searchedTerm);
 
         //Then
-        assertThat(results.getTranslationTerms()).isEqualTo(expectedTranslations);
+        assertThat(results.getSignifications()).isEqualTo(expectedTranslations);
         assertThat(translationRepositoryMock.findAll().size()).isEqualTo(2);
     }
 }

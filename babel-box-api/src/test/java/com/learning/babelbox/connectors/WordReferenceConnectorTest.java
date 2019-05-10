@@ -30,7 +30,8 @@ public class WordReferenceConnectorTest extends ConnectorsCommonTest {
         //Then
         assertThat(searchResult.getOriginalTerm()).isEqualTo("over");
         assertThat(searchResult.getOriginalTermPronunciation()).isEqualTo("ˈəʊvə");
-        assertThat(searchResult.getResultList().get(0)).isEqualTo("au-dessus de ");
+        assertThat(searchResult.getResultList().get(0)).isEqualTo("au-dessus de");
+        assertThat(searchResult.getResultList().get(7)).isEqualTo("terminé, fini");
         assertThat(searchResult.getResultList().size()).isEqualTo(10);
     }
 }
