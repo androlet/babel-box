@@ -41,7 +41,7 @@ public class TranslationService {
                 new Word(source, searchResult.getOriginalTerm(), searchResult.getOriginalTermPronunciation())
         );
         return searchResult.getResultList().stream().map(result -> {
-            Signification signification = significationService.create(new Signification(target, result));
+            Signification signification = significationService.create(new Signification(target, result.getSignifications().get(0)));
             return translationRepository.save(new Translation(originalTerm, signification));
         }).collect(Collectors.toList());
     }

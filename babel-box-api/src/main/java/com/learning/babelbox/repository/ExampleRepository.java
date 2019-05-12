@@ -1,9 +1,9 @@
 package com.learning.babelbox.repository;
 
-import com.learning.babelbox.domain.Word;
+import com.learning.babelbox.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WordRepository extends JpaRepository<Word, Long> {
+public interface ExampleRepository extends JpaRepository<Example, Long> {
 }

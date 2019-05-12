@@ -6,6 +6,7 @@ import com.learning.babelbox.features.dto.TranslationResults;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -23,7 +24,7 @@ public class TranslationTest extends CommonTest {
         //Given
         String searchedTerm = "hello";
         List<String> expectedTranslations = asList("salut", "bonjour");
-        translationRepositoryMock.saveAll(TranslationBuilder.buildFrom(en, fr, searchedTerm, expectedTranslations));
+        translationRepositoryMock.saveAll(TranslationBuilder.buildFrom(en, fr, searchedTerm, new ArrayList<>()));
 
         //When
         TranslationResults results = translationController.getTranslations(searchedTerm);
@@ -38,7 +39,7 @@ public class TranslationTest extends CommonTest {
         String searchedTerm = "hello";
         String pronunciation = "pronunciation";
         List<String> expectedTranslations = asList("salut", "bonjour");
-        ConnectorSearchResult searchResult = new ConnectorSearchResult(searchedTerm, pronunciation, expectedTranslations);
+        ConnectorSearchResult searchResult = new ConnectorSearchResult(searchedTerm, pronunciation, new ArrayList<>());
         wordReferenceConnectorMock.setResult(searchedTerm, searchResult);
 
         //When
