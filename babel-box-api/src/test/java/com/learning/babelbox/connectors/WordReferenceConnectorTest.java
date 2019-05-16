@@ -31,20 +31,28 @@ public class WordReferenceConnectorTest extends ConnectorsCommonTest {
         assertThat(searchResult.getOriginalTerm()).isEqualTo("over");
         assertThat(searchResult.getOriginalTermPronunciation()).isEqualTo("ˈəʊvə");
 
-        assertThat(searchResult.getResultList().get(0).getSignifications()).contains("au-dessus de");
-        assertThat(searchResult.getResultList().get(0).getOriginalLanguageExamples()).contains("They hung a picture over the fireplace.");
-        assertThat(searchResult.getResultList().get(0).getResultLanguageExamples()).contains("Ils ont accroché un tableau au-dessus de la cheminée.");
+        ConnectorSearchResult.Signification current = searchResult.getResultList().get(0).getSignifications().get(0);
+        assertThat(current.getDescription()).isEqualTo("au-dessus de");
+        assertThat(current.getOriginalLanguageExample()).isEqualTo("They hung a picture over the fireplace.");
+        assertThat(current.getResultLanguageExample()).isEqualTo("Ils ont accroché un tableau au-dessus de la cheminée.");
 
-        assertThat(searchResult.getResultList().get(3).getSignifications()).contains("sur", "par-dessus");
-        assertThat(searchResult.getResultList().get(3).getOriginalLanguageExamples()).contains("They put sheets over the furniture to protect it.");
-        assertThat(searchResult.getResultList().get(3).getResultLanguageExamples()).contains(
-                "Ils ont posé les draps par-dessus les meubles pour les protéger.",
-                "Ils ont posé les draps par-dessus les meubles pour les protéger."
-        );
+        current = searchResult.getResultList().get(3).getSignifications().get(0);
+        assertThat(current.getDescription()).isEqualTo("sur");
+        assertThat(current.getOriginalLanguageExample()).isEqualTo("They put sheets over the furniture to protect it.");
+        assertThat(current.getResultLanguageExample()).isEqualTo("Ils ont posé les draps sur les meubles pour les protéger.");
+        current = searchResult.getResultList().get(3).getSignifications().get(1);
+        assertThat(current.getDescription()).isEqualTo("par-dessus");
+        assertThat(current.getOriginalLanguageExample()).isEqualTo("They put sheets over the furniture to protect it.");
+        assertThat(current.getResultLanguageExample()).isEqualTo("Ils ont posé les draps par-dessus les meubles pour les protéger.");
 
-        assertThat(searchResult.getResultList().get(8).getSignifications()).contains("restant", "rester");
-        assertThat(searchResult.getResultList().get(8).getOriginalLanguageExamples()).contains("If there is any food over after the party, you can take it.");
-        assertThat(searchResult.getResultList().get(8).getResultLanguageExamples()).containsOnly("S'il reste de la nourriture après la fête, tu peux la prendre.");
+        current = searchResult.getResultList().get(8).getSignifications().get(0);
+        assertThat(current.getDescription()).isEqualTo("restant");
+        assertThat(current.getOriginalLanguageExample()).isEqualTo("If there is any food over after the party, you can take it.");
+        assertThat(current.getResultLanguageExample()).isEqualTo("S'il reste de la nourriture après la fête, tu peux la prendre.");
+        current = searchResult.getResultList().get(8).getSignifications().get(1);
+        assertThat(current.getDescription()).isEqualTo("rester");
+        assertThat(current.getOriginalLanguageExample()).isEqualTo(null);
+        assertThat(current.getResultLanguageExample()).isEqualTo(null);
 
         assertThat(searchResult.getResultList().size()).isEqualTo(29);
     }

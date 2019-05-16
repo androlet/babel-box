@@ -2,7 +2,6 @@ package com.learning.babelbox.connectors;
 
 import com.learning.babelbox.connectors.dto.ConnectorSearchResult;
 import com.learning.babelbox.domain.Language;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,12 +14,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class WordReferenceConnector implements TranslationConnector {
 
     private static final String BASE_URL = "https://www.wordreference.com";
 
     private final HtmlParser htmlParser;
+
+    public WordReferenceConnector(HtmlParser htmlParser) {
+        this.htmlParser = htmlParser;
+    }
 
     private String buildUrl(Language source, Language target, String word) {
         return new StringBuilder(BASE_URL)
@@ -85,22 +87,25 @@ public class WordReferenceConnector implements TranslationConnector {
     }
 
     private ConnectorSearchResult.Result createResultFromElementTranslation(Element element) {
-        List<String> significations = new ArrayList<>();
-        List<String> originalLanguageExamples = new ArrayList<>();
-        List<String> resultLanguageExamples = new ArrayList<>();
+        int examplesCounter = 0;
+        List<ConnectorSearchResult.Signification> significations = new ArrayList<>();
+        String lastOriginalExample = null;
         String currentTranslationWordreferenceClass = element.className();
         Element target = element;
         while (null != target && currentTranslationWordreferenceClass.equals(target.className())) {
             if (isElementASignification(target)){
-                significations.add(retrieveSignification(target));
+                significations.add(new ConnectorSearchResult.Signification(retrieveSignification(target)));
+                lastOriginalExample = null;
             } else if (isElementAnOriginalExample(target)) {
-                originalLanguageExamples.add(retrieveOriginalExample(target));
-            } else if (isElementAResultExample(target)) {
-                resultLanguageExamples.add(retrieveResultExample(target));
+                lastOriginalExample = retrieveOriginalExample(target);
+            } else if (null != lastOriginalExample && isElementAResultExample(target)) {
+                significations.get(examplesCounter).setOriginalLanguageExample(lastOriginalExample);
+                significations.get(examplesCounter).setResultLanguageExample(retrieveResultExample(target));
+                examplesCounter++;
             }
             target = target.nextElementSibling();
         }
-        return new ConnectorSearchResult.Result(significations, originalLanguageExamples, resultLanguageExamples);
+        return new ConnectorSearchResult.Result(significations);
     }
 
     @Override

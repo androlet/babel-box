@@ -1,12 +1,13 @@
 package com.learning.babelbox.features;
 
-import com.learning.babelbox.builders.TranslationBuilder;
 import com.learning.babelbox.connectors.dto.ConnectorSearchResult;
+import com.learning.babelbox.domain.Translation;
+import com.learning.babelbox.features.builders.ConnectorSearchResultBuilder;
+import com.learning.babelbox.features.builders.TranslationBuilder;
 import com.learning.babelbox.features.dto.TranslationResults;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -24,7 +25,7 @@ public class TranslationTest extends CommonTest {
         //Given
         String searchedTerm = "hello";
         List<String> expectedTranslations = asList("salut", "bonjour");
-        translationRepositoryMock.saveAll(TranslationBuilder.buildFrom(en, fr, searchedTerm, new ArrayList<>()));
+        translationRepositoryMock.saveAll(TranslationBuilder.buildFrom(en, fr, searchedTerm, expectedTranslations));
 
         //When
         TranslationResults results = translationController.getTranslations(searchedTerm);
@@ -38,15 +39,40 @@ public class TranslationTest extends CommonTest {
         //Given
         String searchedTerm = "hello";
         String pronunciation = "pronunciation";
-        List<String> expectedTranslations = asList("salut", "bonjour");
-        ConnectorSearchResult searchResult = new ConnectorSearchResult(searchedTerm, pronunciation, new ArrayList<>());
+        ConnectorSearchResult.Signification signification1 = ConnectorSearchResultBuilder.significationFrom(
+                "salut",
+                "An example with hello !",
+                "Un exemple avec salut !");
+        ConnectorSearchResult.Signification signification2 = ConnectorSearchResultBuilder.significationFrom(
+                "salutation",
+                "An example with hello !",
+                "Un exemple avec salutation !");
+        ConnectorSearchResult.Signification signification3 = ConnectorSearchResultBuilder.significationFrom(
+                "bonjour",
+                "An example with hello !",
+                "Un exemple avec bonjour !");
+        ConnectorSearchResult.Signification signification4 = ConnectorSearchResultBuilder.significationFrom(
+                "salutation",
+                null,
+                null);
+
+        List<ConnectorSearchResult.Result> searchResults = asList(
+            new ConnectorSearchResult.Result(asList(signification1, signification2)),
+            new ConnectorSearchResult.Result(asList(signification3, signification4))
+        );
+        ConnectorSearchResult searchResult = new ConnectorSearchResult(searchedTerm, pronunciation, searchResults);
         wordReferenceConnectorMock.setResult(searchedTerm, searchResult);
 
         //When
         TranslationResults results = translationController.getTranslations(searchedTerm);
 
         //Then
-        assertThat(results.getSignifications()).isEqualTo(expectedTranslations);
-        assertThat(translationRepositoryMock.findAll().size()).isEqualTo(2);
+        List<Translation> storedData = translationRepositoryMock.findAll();
+        assertThat(storedData.size()).isEqualTo(4);
+        assertThat(results.getSignifications()).isEqualTo(asList("salut", "salutation", "bonjour", "salutation"));
+        assertThat(storedData.get(1).getOriginalExample().getSentence()).isEqualTo("An example with hello !");
+        assertThat(storedData.get(1).getTranslatedExample().getSentence()).isEqualTo("Un exemple avec salutation !");
+
+        assertThat(storedData.get(3).getTranslatedExample()).isEqualTo(null);
     }
 }

@@ -14,7 +14,7 @@ public class BaseRepositoryMock<T> implements JpaRepository<T, Long> {
     protected Map<Long, T> data;
 
     public BaseRepositoryMock(){
-        data = new HashMap<>();
+        data = new LinkedHashMap<>();
     }
 
     @Override

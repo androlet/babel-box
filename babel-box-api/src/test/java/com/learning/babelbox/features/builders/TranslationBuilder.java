@@ -1,4 +1,4 @@
-package com.learning.babelbox.builders;
+package com.learning.babelbox.features.builders;
 
 import com.learning.babelbox.domain.Language;
 import com.learning.babelbox.domain.Signification;

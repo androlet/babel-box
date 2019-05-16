@@ -27,26 +27,46 @@ public class ConnectorSearchResult {
 
     public static class Result {
 
-        private List<String> significations;
-        private List<String> originalLanguageExamples;
-        private List<String> resultLanguageExamples;
+        private List<Signification> significations;
 
-        public Result(List<String> significations, List<String> originalLanguageExamples, List<String> resultLanguageExamples) {
+        public Result(List<Signification> significations) {
             this.significations = significations;
-            this.originalLanguageExamples = originalLanguageExamples;
-            this.resultLanguageExamples = resultLanguageExamples;
         }
 
-        public List<String> getSignifications() {
+        public List<Signification> getSignifications() {
             return significations;
         }
+    }
 
-        public List<String> getOriginalLanguageExamples() {
-            return originalLanguageExamples;
+
+
+    public static class Signification {
+        private String description;
+        private String originalLanguageExample;
+        private String resultLanguageExample;
+
+        public Signification(String description) {
+            this.description = description;
         }
 
-        public List<String> getResultLanguageExamples() {
-            return resultLanguageExamples;
+        public void setOriginalLanguageExample(String originalLanguageExample) {
+            this.originalLanguageExample = originalLanguageExample;
+        }
+
+        public void setResultLanguageExample(String resultLanguageExample) {
+            this.resultLanguageExample = resultLanguageExample;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getOriginalLanguageExample() {
+            return originalLanguageExample;
+        }
+
+        public String getResultLanguageExample() {
+            return resultLanguageExample;
         }
     }
 }

@@ -1,23 +1,31 @@
 package com.learning.babelbox.domain;
 
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 
 @Entity
-@NoArgsConstructor
 public class Translation extends EntityCore {
 
     @ManyToOne
     private Word originalTerm;
-    @ManyToOne
+    @OneToOne @MapsId
     private Signification signification;
+    @OneToOne
+    private Example originalExample;
+    @OneToOne
+    private Example translatedExample;
+
+    public Translation() {}
 
     public Translation(Word originalTerm, Signification signification) {
         this.originalTerm = originalTerm;
         this.signification = signification;
+    }
+
+    public Translation(Word originalTerm, Signification signification, Example originalExample, Example translatedExample) {
+        this(originalTerm, signification);
+        this.originalExample = originalExample;
+        this.translatedExample = translatedExample;
     }
 
     public Word getOriginalTerm() {
@@ -26,5 +34,13 @@ public class Translation extends EntityCore {
 
     public Signification getSignification() {
         return signification;
+    }
+
+    public Example getOriginalExample() {
+        return originalExample;
+    }
+
+    public Example getTranslatedExample() {
+        return translatedExample;
     }
 }
