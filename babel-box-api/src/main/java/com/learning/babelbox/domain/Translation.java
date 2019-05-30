@@ -1,6 +1,8 @@
 package com.learning.babelbox.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -8,12 +10,10 @@ public class Translation extends EntityCore {
 
     @ManyToOne
     private Word originalTerm;
-    @OneToOne @MapsId
+    @OneToOne
     private Signification signification;
-    @OneToOne
-    private Example originalExample;
-    @OneToOne
-    private Example translatedExample;
+    @ManyToOne
+    private SentenceTranslation example;
 
     public Translation() {}
 
@@ -22,10 +22,9 @@ public class Translation extends EntityCore {
         this.signification = signification;
     }
 
-    public Translation(Word originalTerm, Signification signification, Example originalExample, Example translatedExample) {
+    public Translation(Word originalTerm, Signification signification, SentenceTranslation example) {
         this(originalTerm, signification);
-        this.originalExample = originalExample;
-        this.translatedExample = translatedExample;
+        this.example = example;
     }
 
     public Word getOriginalTerm() {
@@ -36,11 +35,11 @@ public class Translation extends EntityCore {
         return signification;
     }
 
-    public Example getOriginalExample() {
-        return originalExample;
+    public String getOriginalExample() {
+        return example == null ? null : example.getOriginalSentence().getContent();
     }
 
-    public Example getTranslatedExample() {
-        return translatedExample;
+    public String getTranslatedExample() {
+        return example == null ? null : example.getTargetSentence().getContent();
     }
 }

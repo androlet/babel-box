@@ -20,7 +20,7 @@ public class LanguageService {
     }
 
     @Transactional
-    public Language createIfMissing(String localCode) {
+    public Language createOrGet(String localCode) {
         Language language = getLanguage(localCode);
         if(null == language) {
             language = create(localCode);

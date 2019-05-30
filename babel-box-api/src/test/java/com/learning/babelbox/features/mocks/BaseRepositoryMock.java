@@ -1,16 +1,18 @@
 package com.learning.babelbox.features.mocks;
 
+import com.learning.babelbox.domain.EntityCore;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.*;
 
-public class BaseRepositoryMock<T> implements JpaRepository<T, Long> {
+public class BaseRepositoryMock<T extends EntityCore> implements JpaRepository<T, Long> {
 
-    private static Long autoIncrementer = 0L;
+    private static Long autoIncrementer = 1L;
     protected Map<Long, T> data;
 
     public BaseRepositoryMock(){
@@ -64,7 +66,14 @@ public class BaseRepositoryMock<T> implements JpaRepository<T, Long> {
 
     @Override
     public <S extends T> S save(S s) {
-        data.put(autoIncrementer++, s);
+        Long id = s.getId();
+        if (id != null && data.get(id) != null) {
+            data.put(id, s);
+        } else {
+            id = autoIncrementer++;
+            ReflectionTestUtils.setField(s, "id", id);
+            data.put(id, s);
+        }
         return s;
     }
 

@@ -4,24 +4,25 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Signification extends EntityCore {
+public class Sentence extends EntityCore {
 
     @ManyToOne
     private Language language;
-    private String description;
+    private String content;
 
-    public Signification() {}
+    public Sentence() {
+    }
 
-    public Signification(Language language, String description) {
+    public Sentence(Language language, String content) {
         this.language = language;
-        this.description = description;
+        this.content = content;
     }
 
     public Language getLanguage() {
         return language;
     }
 
-    public String getDescription() {
-        return description;
+    public String getContent() {
+        return content;
     }
 }

@@ -31,7 +31,8 @@ public class TranslationTest extends CommonTest {
         TranslationResults results = translationController.getTranslations(searchedTerm);
 
         //Then
-        assertThat(results.getSignifications()).isEqualTo(expectedTranslations);
+        assertThat(results.getResults().get(0).getSignification()).isEqualTo(expectedTranslations.get(0));
+        assertThat(results.getResults().get(1).getSignification()).isEqualTo(expectedTranslations.get(1));
     }
 
     @Test
@@ -69,10 +70,12 @@ public class TranslationTest extends CommonTest {
         //Then
         List<Translation> storedData = translationRepositoryMock.findAll();
         assertThat(storedData.size()).isEqualTo(4);
-        assertThat(results.getSignifications()).isEqualTo(asList("salut", "salutation", "bonjour", "salutation"));
-        assertThat(storedData.get(1).getOriginalExample().getSentence()).isEqualTo("An example with hello !");
-        assertThat(storedData.get(1).getTranslatedExample().getSentence()).isEqualTo("Un exemple avec salutation !");
-
+        assertThat(results.getResults().get(0).getSignification()).isEqualTo("salut");
+        assertThat(results.getResults().get(1).getSignification()).isEqualTo("salutation");
+        assertThat(storedData.get(1).getOriginalExample()).isEqualTo("An example with hello !");
+        assertThat(storedData.get(1).getTranslatedExample()).isEqualTo("Un exemple avec salutation !");
+        assertThat(results.getResults().get(2).getSignification()).isEqualTo("bonjour");
+        assertThat(results.getResults().get(3).getSignification()).isEqualTo("salutation");
         assertThat(storedData.get(3).getTranslatedExample()).isEqualTo(null);
     }
 }

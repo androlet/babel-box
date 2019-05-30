@@ -1,5 +1,7 @@
 package com.learning.babelbox.connectors.dto;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 public class ConnectorSearchResult {
@@ -59,6 +61,10 @@ public class ConnectorSearchResult {
 
         public String getDescription() {
             return description;
+        }
+
+        public boolean hasAnExample() {
+            return StringUtils.isNotBlank(originalLanguageExample) && StringUtils.isNotBlank(resultLanguageExample);
         }
 
         public String getOriginalLanguageExample() {

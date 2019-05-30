@@ -11,4 +11,8 @@ public abstract class EntityCore {
 
     @Version
     protected long version;
+
+    public Long getId() {
+        return id;
+    }
 }

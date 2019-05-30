@@ -16,18 +16,22 @@ import java.util.stream.Collectors;
 public class TranslationService {
 
     private final TranslationRepository translationRepository;
-    private final LanguageService languageService;
     private final WordService wordService;
     private final SignificationService significationService;
-    private final ExampleService exampleService;
+    private final SentenceTranslationService sentenceTranslationService;
     private final TranslationConnector translationConnector;
 
-    public TranslationService(TranslationRepository translationRepository, LanguageService languageService, WordService wordService, SignificationService significationService, ExampleService exampleService, TranslationConnector translationConnector) {
+    public TranslationService(
+            TranslationRepository translationRepository,
+            WordService wordService,
+            SignificationService significationService,
+            SentenceTranslationService sentenceTranslationService,
+            TranslationConnector translationConnector
+    ) {
         this.translationRepository = translationRepository;
-        this.languageService = languageService;
         this.wordService = wordService;
         this.significationService = significationService;
-        this.exampleService = exampleService;
+        this.sentenceTranslationService = sentenceTranslationService;
         this.translationConnector = translationConnector;
     }
 
@@ -50,13 +54,13 @@ public class TranslationService {
                 .flatMap(result -> result.getSignifications().stream())
                 .map(resultSignification -> {
                     Signification signification = significationService.create(new Signification(target, resultSignification.getDescription()));
-                    Example originalExample = null;
-                    Example resultExample = null;
-                    if (StringUtils.isNotBlank(resultSignification.getOriginalLanguageExample())) {
-                        originalExample = exampleService.create(new Example(source, resultSignification.getOriginalLanguageExample()) );
-                        resultExample = exampleService.create(new Example(target, resultSignification.getResultLanguageExample()));
+                    SentenceTranslation example = null;
+                    if (resultSignification.hasAnExample()) {
+                        Sentence originalExample = new Sentence(source, resultSignification.getOriginalLanguageExample());
+                        Sentence resultExample = new Sentence(target, resultSignification.getResultLanguageExample());
+                        example = sentenceTranslationService.getOrCreate(originalExample, resultExample);
                     }
-                    return translationRepository.save(new Translation(originalTerm, signification, originalExample, resultExample));
+                    return translationRepository.save(new Translation(originalTerm, signification, example));
                 })
                 .collect(Collectors.toList());
     }
