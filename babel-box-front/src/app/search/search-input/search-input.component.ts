@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {SearchService} from '../services/search.service';
 import {BaseComponent} from "../../base.component";
+import {TranslationResults} from "../domain/translation-results";
 
 @Component({
   selector: 'app-search-input',
@@ -10,7 +11,7 @@ import {BaseComponent} from "../../base.component";
 export class SearchInputComponent extends BaseComponent implements OnInit {
 
   searchedTerm: string;
-  @Output() resultsFound = new EventEmitter<string[]>();
+  @Output() resultsFound = new EventEmitter<TranslationResults>();
 
   constructor(private searchService: SearchService) {
     super();
@@ -24,7 +25,7 @@ export class SearchInputComponent extends BaseComponent implements OnInit {
       return;
     }
     this.safelySubscriptionable(this.searchService.searchTerm(this.searchedTerm))
-      .subscribe((results: string[]) => {
+      .subscribe((results: TranslationResults) => {
         this.resultsFound.emit(results);
       });
   }

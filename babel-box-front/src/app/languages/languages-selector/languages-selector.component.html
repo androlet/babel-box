@@ -1,3 +1,18 @@
-<p>
-  languages-selector works!
-</p>
+<section>
+  <mat-form-field>
+    <mat-label>Original</mat-label>
+    <mat-select [(ngModel)]="original">
+      <mat-option *ngFor="let option of getOriginalLanguageOptions()" [value]="option">
+        {{option.code}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Target</mat-label>
+    <mat-select [(ngModel)]="target">
+      <mat-option *ngFor="let option of getTargetLanguageOptions()" [value]="option">
+        {{option.code}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</section>

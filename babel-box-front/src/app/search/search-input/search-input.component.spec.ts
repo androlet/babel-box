@@ -1,15 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SearchInputComponent} from './search-input.component';
-import {SearchService} from '../services/search.service';
-import {of} from 'rxjs';
 import {SearchInputComponentTested, SearchModuleTesting} from "../search.module.testing";
+import {HttpTestingController} from "@angular/common/http/testing";
+import {TranslationResults} from "../domain/translation-results";
+import {BABELBOX_API_ROOT} from "../../constants";
 
 describe('SearchInputComponent', () => {
   let component: SearchInputComponentTested;
   let fixture: ComponentFixture<SearchInputComponentTested>;
+  let mockHttp: HttpTestingController;
 
-  let searchService: SearchService;
+  const expectedResults = {
+
+  } as TranslationResults;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,7 +23,7 @@ describe('SearchInputComponent', () => {
     fixture = TestBed.createComponent(SearchInputComponentTested);
     component = fixture.componentInstance;
 
-    searchService = TestBed.get(SearchService);
+    mockHttp = TestBed.get(HttpTestingController);
     fixture.detectChanges();
   });
 
@@ -34,12 +38,12 @@ describe('SearchInputComponent', () => {
   it('should fetch search result and emit its', () => {
 
     //Given
-    const expectedResults = ['termOne', 'termTwo'];
-    component.searchedTerm = 'searchedTerm';
-    spyOn(searchService, 'searchTerm').and.returnValue(of(expectedResults));
+    const searchedTerm = 'searchedTerm';
+    component.searchedTerm = searchedTerm;
 
     //When
     component.submitSearch();
+    mockHttp.expectOne(`${BABELBOX_API_ROOT}/translations/search?searchedTerm=${searchedTerm}`).flush(expectedResults);
 
     //Then
     expect(component.resultsFound.emit).toHaveBeenCalledWith(expectedResults);

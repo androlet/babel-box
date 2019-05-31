@@ -12,7 +12,7 @@ export class LanguagesSelectorComponent extends BaseComponent implements OnInit 
 
   original: LanguageOption;
   target: LanguageOption;
-  private languagesList: LanguageOption[];
+  languagesList: LanguageOption[];
 
   constructor(private languagesService: LanguagesService) {
     super();
