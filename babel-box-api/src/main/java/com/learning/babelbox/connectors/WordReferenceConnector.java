@@ -43,6 +43,14 @@ public class WordReferenceConnector implements TranslationConnector {
                 .split("<")[0]).trim();
     }
 
+    private String retrieveFrom(Document document) {
+        return document.select("label.custom-select > select > option").first().attr("value").substring(0, 2);
+    }
+
+    private String retrieveTo(Document document) {
+        return document.select("label.custom-select > select > option").first().attr("value").substring(2);
+    }
+
     private String retrieveOriginalWord(Document document) {
         return document.select("h3.headerWord").html();
     }
@@ -114,6 +122,8 @@ public class WordReferenceConnector implements TranslationConnector {
         try {
             Document document = htmlParser.download(url);
             return new ConnectorSearchResult(
+                retrieveFrom(document),
+                retrieveTo(document),
                 retrieveOriginalWord(document),
                 retrievePrononciation(document),
                 retrieveElementTranslation(document).stream()

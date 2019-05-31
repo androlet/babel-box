@@ -28,6 +28,8 @@ public class WordReferenceConnectorTest extends ConnectorsCommonTest {
         ConnectorSearchResult searchResult = wordReferenceConnector.fetch(source, target, "over");
 
         //Then
+        assertThat(searchResult.getFrom()).isEqualTo("en");
+        assertThat(searchResult.getTo()).isEqualTo("fr");
         assertThat(searchResult.getOriginalTerm()).isEqualTo("over");
         assertThat(searchResult.getOriginalTermPronunciation()).isEqualTo("ˈəʊvə");
 

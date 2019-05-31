@@ -3,9 +3,12 @@ package com.learning.babelbox.services;
 import com.learning.babelbox.connectors.TranslationConnector;
 import com.learning.babelbox.connectors.dto.ConnectorSearchResult;
 import com.learning.babelbox.domain.*;
+import com.learning.babelbox.exceptions.ReversedLanguageException;
+import com.learning.babelbox.exceptions.WrongLanguageException;
 import com.learning.babelbox.features.dto.TranslationResults;
 import com.learning.babelbox.repository.TranslationRepository;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,17 +39,24 @@ public class TranslationService {
     }
 
     @Transactional
-    public TranslationResults getTranslationResults(Language source, Language target, String searchedTerm) {
+    public List<Translation> getTranslationResults(Language source, Language target, String searchedTerm) {
         List<Translation> translations = translationRepository.findByOriginalTerm(searchedTerm);
         if(!translations.isEmpty()) {
-            return new TranslationResults(translations);
+            return translations;
         }
-        return new TranslationResults(fetchAndSaveTranslations(source, target, searchedTerm));
+        return fetchAndSaveTranslations(source, target, searchedTerm);
     }
 
     @Transactional
     public List<Translation> fetchAndSaveTranslations(Language source, Language target, String searchedTerm) {
         ConnectorSearchResult searchResult = translationConnector.fetch(source, target, searchedTerm);
+
+        if (hasReversedLanguage(source, target, searchResult)) {
+            throw new ReversedLanguageException();
+        } else if (hasWrongLanguage(source, target, searchResult)) {
+            throw new WrongLanguageException();
+        }
+
         Word originalTerm = wordService.create(
                 new Word(source, searchResult.getOriginalTerm(), searchResult.getOriginalTermPronunciation())
         );
@@ -63,5 +73,13 @@ public class TranslationService {
                     return translationRepository.save(new Translation(originalTerm, signification, example));
                 })
                 .collect(Collectors.toList());
+    }
+
+    private boolean hasReversedLanguage(Language source, Language target, ConnectorSearchResult searchResult) {
+        return source.getLocaleCode().equals(searchResult.getTo()) && target.getLocaleCode().equals(searchResult.getFrom());
+    }
+
+    private boolean hasWrongLanguage(Language source, Language target, ConnectorSearchResult searchResult) {
+        return !source.getLocaleCode().equals(searchResult.getFrom()) || !target.getLocaleCode().equals(searchResult.getTo());
     }
 }

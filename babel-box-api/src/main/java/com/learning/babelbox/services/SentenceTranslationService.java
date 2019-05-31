@@ -19,7 +19,7 @@ public class SentenceTranslationService {
     public SentenceTranslation getOrCreate(Sentence original, Sentence target) {
         Sentence originalSaved = sentenceService.getOrCreate(original);
         Sentence targetSaved = sentenceService.getOrCreate(target);
-        return sentenceTranslationRepository.findByOriginalSentenceAndTargetSentence(original, target)
+        return sentenceTranslationRepository.findByOriginalSentenceAndTargetSentence(originalSaved, targetSaved)
                 .orElseGet(() -> sentenceTranslationRepository.save(new SentenceTranslation(originalSaved, targetSaved)));
     }
 }

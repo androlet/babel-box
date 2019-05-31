@@ -5,14 +5,26 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 
 public class ConnectorSearchResult {
+    private String from;
+    private String to;
     private String originalTerm;
     private String originalTermPronunciation;
     private List<Result> resultList;
 
-    public ConnectorSearchResult(String originalTerm, String originalTermPronunciation, List<Result> resultList) {
+    public ConnectorSearchResult(String from, String to, String originalTerm, String originalTermPronunciation, List<Result> resultList) {
+        this.from = from;
+        this.to = to;
         this.originalTerm = originalTerm;
         this.originalTermPronunciation = originalTermPronunciation;
         this.resultList = resultList;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
     }
 
     public String getOriginalTerm() {

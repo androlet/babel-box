@@ -5,6 +5,8 @@ import com.learning.babelbox.repository.LanguageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class LanguageService {
 
@@ -12,6 +14,11 @@ public class LanguageService {
 
     public LanguageService(LanguageRepository languageRepository) {
         this.languageRepository = languageRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Language> getAllLanguages() {
+        return languageRepository.findAll();
     }
 
     @Transactional(readOnly = true)

@@ -20,6 +20,7 @@ public class CommonTest {
     protected ApplicationContext applicationContext;
 
     protected TranslationController translationController;
+    protected LanguageController languageController;
 
     protected TranslationRepositoryMock translationRepositoryMock;
     protected LanguageRepositoryMock languageRepositoryMock;
@@ -29,6 +30,7 @@ public class CommonTest {
     protected void initContext() {
         applicationContext = new AnnotationConfigApplicationContext(CommonTest.class);
         translationController = applicationContext.getBean(TranslationController.class);
+        languageController = applicationContext.getBean(LanguageController.class);
         languageRepositoryMock = applicationContext.getBean(LanguageRepositoryMock.class);
         translationRepositoryMock = applicationContext.getBean(TranslationRepositoryMock.class);
         wordReferenceConnectorMock = (WordReferenceConnectorMock) applicationContext.getBean(TranslationConnector.class);
