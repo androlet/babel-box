@@ -10,7 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 public class ErrorHandlerController {
 
     @ExceptionHandler(BabelBoxWebException.class)
-    public final ResponseEntity<Error> handleException(BabelBoxWebException ex, WebRequest request) {
+    public final ResponseEntity<Error> handleException(BabelBoxWebException ex) {
         return ResponseEntity.status(ex.getStatus()).body(new Error(ex.getErrorMessage()));
     }
 

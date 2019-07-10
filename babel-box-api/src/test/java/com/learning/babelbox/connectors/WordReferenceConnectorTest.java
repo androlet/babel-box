@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WordReferenceConnectorTest extends ConnectorsCommonTest {
+public class WordReferenceConnectorTest extends BaseConnectorsTest {
 
     @Before
     public void setUp() {

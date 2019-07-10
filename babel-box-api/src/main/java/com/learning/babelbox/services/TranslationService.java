@@ -47,8 +47,7 @@ public class TranslationService {
         return fetchAndSaveTranslations(source, target, searchedTerm);
     }
 
-    @Transactional
-    public List<Translation> fetchAndSaveTranslations(Language source, Language target, String searchedTerm) {
+    private List<Translation> fetchAndSaveTranslations(Language source, Language target, String searchedTerm) {
         ConnectorSearchResult searchResult = translationConnector.fetch(source, target, searchedTerm);
 
         if (hasReversedLanguage(source, target, searchResult)) {

@@ -2,6 +2,8 @@ package com.learning.babelbox;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -9,11 +11,16 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.inject.Inject;
+import javax.persistence.Entity;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+
+import static java.util.Arrays.asList;
 
 @SpringBootApplication
 @EnableJpaRepositories
@@ -21,8 +28,11 @@ import javax.sql.DataSource;
 @Profile("server")
 public class Application {
 
-    private String[] packagesToScanPath = { "com.learning.babelbox.features", "com.learning.babelbox.domain" };
-
+    private String[] packagesToScanPath = {
+            "com.learning.babelbox.features",
+            "com.learning.babelbox.domain",
+            "com.learning.babelbox.platform"
+    };
     /*
     @Bean
     public DataSource dataSource() {
@@ -62,6 +72,7 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        ApplicationContext context = SpringApplication.run(Application.class, args);
+        asList(context.getBeanDefinitionNames()).forEach(name -> System.out.println(name));
     }
 }

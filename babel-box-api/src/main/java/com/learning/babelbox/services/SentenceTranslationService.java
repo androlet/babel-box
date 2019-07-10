@@ -4,6 +4,7 @@ import com.learning.babelbox.domain.Sentence;
 import com.learning.babelbox.domain.SentenceTranslation;
 import com.learning.babelbox.repository.SentenceTranslationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SentenceTranslationService {
@@ -16,6 +17,7 @@ public class SentenceTranslationService {
         this.sentenceService = sentenceService;
     }
 
+    @Transactional
     public SentenceTranslation getOrCreate(Sentence original, Sentence target) {
         Sentence originalSaved = sentenceService.getOrCreate(original);
         Sentence targetSaved = sentenceService.getOrCreate(target);

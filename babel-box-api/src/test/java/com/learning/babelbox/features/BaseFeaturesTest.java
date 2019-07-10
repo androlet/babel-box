@@ -5,6 +5,7 @@ import com.learning.babelbox.domain.Language;
 import com.learning.babelbox.features.mocks.LanguageRepositoryMock;
 import com.learning.babelbox.features.mocks.TranslationRepositoryMock;
 import com.learning.babelbox.features.mocks.WordReferenceConnectorMock;
+import com.learning.babelbox.mocks.BaseRepositoryMock;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan({"com.learning.babelbox.*"})
-public class CommonTest {
+public class BaseFeaturesTest {
 
     public Language en;
     public Language fr;
@@ -28,7 +29,9 @@ public class CommonTest {
     protected WordReferenceConnectorMock wordReferenceConnectorMock;
 
     protected void initContext() {
-        applicationContext = new AnnotationConfigApplicationContext(CommonTest.class);
+        applicationContext = new AnnotationConfigApplicationContext(BaseFeaturesTest.class);
+        applicationContext.getBeansOfType(BaseRepositoryMock.class)
+                .values().stream().forEach(BaseRepositoryMock::reset);
         translationController = applicationContext.getBean(TranslationController.class);
         languageController = applicationContext.getBean(LanguageController.class);
         languageRepositoryMock = applicationContext.getBean(LanguageRepositoryMock.class);

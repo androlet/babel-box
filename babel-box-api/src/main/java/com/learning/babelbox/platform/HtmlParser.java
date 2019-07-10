@@ -1,4 +1,4 @@
-package com.learning.babelbox.connectors;
+package com.learning.babelbox.platform;
 
 import org.jsoup.nodes.Document;
 

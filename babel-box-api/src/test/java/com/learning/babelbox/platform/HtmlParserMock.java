@@ -1,6 +1,5 @@
-package com.learning.babelbox.connectors.mocks;
+package com.learning.babelbox.platform;
 
-import com.learning.babelbox.connectors.HtmlParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.context.annotation.Primary;

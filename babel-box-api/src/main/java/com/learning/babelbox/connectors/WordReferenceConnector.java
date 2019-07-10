@@ -2,6 +2,7 @@ package com.learning.babelbox.connectors;
 
 import com.learning.babelbox.connectors.dto.ConnectorSearchResult;
 import com.learning.babelbox.domain.Language;
+import com.learning.babelbox.platform.HtmlParser;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

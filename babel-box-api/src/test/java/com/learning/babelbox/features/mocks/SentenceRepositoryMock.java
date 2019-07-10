@@ -2,6 +2,7 @@ package com.learning.babelbox.features.mocks;
 
 import com.learning.babelbox.domain.Language;
 import com.learning.babelbox.domain.Sentence;
+import com.learning.babelbox.mocks.BaseRepositoryMock;
 import com.learning.babelbox.repository.SentenceRepository;
 import org.springframework.stereotype.Component;
 

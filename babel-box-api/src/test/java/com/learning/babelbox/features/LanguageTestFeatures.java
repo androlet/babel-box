@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class LanguageTest extends CommonTest {
+public class LanguageTestFeatures extends BaseFeaturesTest {
 
     @Before
     public void setUp() {

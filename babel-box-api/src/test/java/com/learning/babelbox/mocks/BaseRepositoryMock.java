@@ -1,4 +1,4 @@
-package com.learning.babelbox.features.mocks;
+package com.learning.babelbox.mocks;
 
 import com.learning.babelbox.domain.EntityCore;
 import org.springframework.data.domain.Example;
@@ -16,6 +16,10 @@ public class BaseRepositoryMock<T extends EntityCore> implements JpaRepository<T
     protected Map<Long, T> data;
 
     public BaseRepositoryMock(){
+        reset();
+    }
+
+    public void reset() {
         data = new LinkedHashMap<>();
     }
 
