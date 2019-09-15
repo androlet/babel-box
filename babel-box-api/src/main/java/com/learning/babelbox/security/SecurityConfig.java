@@ -9,12 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static com.learning.babelbox.features.UserController.LOGIN_URL;
-import static java.util.Arrays.asList;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -24,8 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
-    @Value("${front-end.url}")
-    public static String frontEndUrl;
+    @Value("${cors.allowed-origin.urls}")
+    private String allowedUrls;
 
     @Bean
     public AuthTokenFilter authTokenFilter() {
@@ -37,15 +33,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new AuthTokenProvider(userService);
     }
 
-    @Bean
+    /*@Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(asList(frontEndUrl));
-        configuration.setAllowedMethods(asList("GET","POST"));
+        configuration.setAllowedOrigins(Arrays.asList(allowedUrls.split(",")));
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }
+    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -53,9 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
-                .authorizeRequests().antMatchers(LOGIN_URL).anonymous()
+                .cors().disable()//.configurationSource(corsConfigurationSource()).and()
+                .authorizeRequests().antMatchers(LOGIN_URL).permitAll()
                 .and()
                 .addFilterAt(authTokenFilter(), BasicAuthenticationFilter.class)
                 .authorizeRequests().anyRequest().authenticated();

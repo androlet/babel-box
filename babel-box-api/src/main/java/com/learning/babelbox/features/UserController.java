@@ -6,9 +6,7 @@ import com.learning.babelbox.platform.UUIDProvider;
 import com.learning.babelbox.services.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +22,10 @@ public class UserController {
     private final UserService userService;
     private final UUIDProvider uuidProvider;
 
-    public UserController(@Value("${env.https.skip:false}") boolean skipHTTPs, UserService userService, UUIDProvider uuidProvider) {
+    public UserController(
+            @Value("${env.https.skip:false}") boolean skipHTTPs,
+            UserService userService,
+            UUIDProvider uuidProvider) {
         this.skipHTTPs = skipHTTPs;
         this.userService = userService;
         this.uuidProvider = uuidProvider;
@@ -46,6 +47,13 @@ public class UserController {
         String token = uuidProvider.getRandomUUID();
         connectingUser.setToken(token);
         userService.save(connectingUser);
+        response.addCookie(generateAuthenticationCookie(token));
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value= LOGIN_URL)
+    public ResponseEntity loginFromGet(HttpServletResponse response) {
+        String token = uuidProvider.getRandomUUID();
         response.addCookie(generateAuthenticationCookie(token));
         return ResponseEntity.noContent().build();
     }
