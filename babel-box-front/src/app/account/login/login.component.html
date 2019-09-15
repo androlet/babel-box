@@ -1,0 +1,12 @@
+<section class="login">
+  <form (submit)="tryLogin()" [formGroup]="credentialsFormControls">
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="email" type="text" formControlName="username">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="password" type="password" formControlName="password">
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary">LOG IN</button>
+      <mat-error class="login-error-message" *ngIf="isCredentialsInvalid()">Invalid credentials</mat-error>
+  </form>
+</section>

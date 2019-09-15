@@ -12,7 +12,7 @@ export class LanguagesSelectorComponent extends BaseComponent implements OnInit 
 
   original: LanguageOption;
   target: LanguageOption;
-  languagesList: LanguageOption[];
+  languagesList: LanguageOption[] = [];
 
   constructor(private languagesService: LanguagesService) {
     super();
@@ -20,6 +20,10 @@ export class LanguagesSelectorComponent extends BaseComponent implements OnInit 
 
   ngOnInit() {
     this.loadLanguages();
+  }
+
+  hasLanguages(): boolean {
+    return this.languagesList.length > 0;
   }
 
   isSelectedAsOriginal(option: LanguageOption): boolean {

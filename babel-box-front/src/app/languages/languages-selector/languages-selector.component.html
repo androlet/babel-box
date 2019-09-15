@@ -1,4 +1,4 @@
-<section>
+<section *ngIf="hasLanguages()">
   <mat-form-field>
     <mat-label>Original</mat-label>
     <mat-select [(ngModel)]="original">

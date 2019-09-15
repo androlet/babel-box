@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import {SearchModule} from './search/search.module';
 import {ExercisesModule} from './exercises/exercises.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {LanguagesModule} from "./languages/languages.module";
+import {LanguagesModule} from './languages/languages.module';
+import {AccountModule} from './account/account.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import {LanguagesModule} from "./languages/languages.module";
     AppRoutingModule,
     BrowserAnimationsModule,
     LanguagesModule,
+    AccountModule,
     SearchModule,
     ExercisesModule,
   ],
