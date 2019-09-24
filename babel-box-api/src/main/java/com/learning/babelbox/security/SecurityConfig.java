@@ -4,6 +4,7 @@ import com.learning.babelbox.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -52,10 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .cors().disable()//.configurationSource(corsConfigurationSource()).and()
-                .authorizeRequests().antMatchers(LOGIN_URL).permitAll()
+                .authorizeRequests().antMatchers("/web/**", LOGIN_URL).permitAll()
                 .and()
                 .addFilterAt(authTokenFilter(), BasicAuthenticationFilter.class)
-                .authorizeRequests().anyRequest().authenticated();
+                .authorizeRequests().antMatchers("/api/**").authenticated();
     }
 
 }
