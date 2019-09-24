@@ -1,3 +1,3 @@
-const BABELBOX_API_ROOT = 'http://localhost:8080/api';
+const BABELBOX_API_ROOT = '/api';
 
 export { BABELBOX_API_ROOT };
