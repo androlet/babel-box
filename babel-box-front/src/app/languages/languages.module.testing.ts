@@ -1,7 +1,8 @@
 import {Component, NgModule} from '@angular/core';
-import {LanguagesModule} from "./languages.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {LanguagesSelectorComponent} from "./languages-selector/languages-selector.component";
+import {LanguagesModule} from './languages.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {LanguagesSelectorComponent} from './languages-selector/languages-selector.component';
+import {TranslationDisplayComponent} from './translation-display/translation-display.component';
 
 @Component({
   selector: 'app-languages-selector',
@@ -9,12 +10,18 @@ import {LanguagesSelectorComponent} from "./languages-selector/languages-selecto
 })
 export class LanguagesSelectorComponentTesting extends LanguagesSelectorComponent {}
 
+@Component({
+  selector: 'app-languages-selector',
+  template: ''
+})
+export class TranslationDisplayComponentTesting extends TranslationDisplayComponent {}
+
 @NgModule({
-  declarations: [LanguagesSelectorComponentTesting],
+  declarations: [LanguagesSelectorComponentTesting, TranslationDisplayComponentTesting],
   imports: [
     LanguagesModule,
     HttpClientTestingModule
   ],
-  exports: [LanguagesSelectorComponentTesting]
+  exports: [LanguagesSelectorComponentTesting, TranslationDisplayComponentTesting]
 })
 export class LanguagesModuleTesting { }

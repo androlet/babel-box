@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {SearchService} from '../services/search.service';
-import {BaseComponent} from "../../base.component";
-import {TranslationResults} from "../domain/translation-results";
+import {BaseComponent} from '../../base.component';
+import {TranslationResults} from '../domain/translation-results';
 
 @Component({
   selector: 'app-search-input',

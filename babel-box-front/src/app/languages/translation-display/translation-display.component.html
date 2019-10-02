@@ -1,0 +1,16 @@
+<section class="translation-display">
+  <div>
+    <div class="orignal-word"> {{ translation.originalTerm }}</div>
+    <div class="pronunciation"><mat-icon>music_note</mat-icon>{{translation.pronunciation}}</div>
+  </div>
+
+  <mat-list class="examples">
+      <mat-list-item *ngFor="let result of translation.results">
+        <article>
+          <div mat-line class="signification">{{result.signification }}</div>
+          <div mat-line class="original-example">{{result.originalExample}}</div>
+          <div mat-line class="translated-example">{{result.translatedExample}}</div>
+        </article>
+      </mat-list-item>
+  </mat-list>
+</section>

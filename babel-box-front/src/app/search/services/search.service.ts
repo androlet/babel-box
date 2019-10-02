@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {BABELBOX_API_ROOT} from '../../constants';
-import {TranslationResults} from "../domain/translation-results";
+import {TranslationResults} from '../domain/translation-results';
 
 @Injectable()
 export class SearchService {

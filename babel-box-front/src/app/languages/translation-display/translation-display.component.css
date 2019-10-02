@@ -1,0 +1,30 @@
+section.translation-display {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.orignal-word {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.pronunciation {
+  font-style: italic;
+}
+
+mat-list.examples {
+  text-align: left;
+}
+
+.signification {
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.original-example {
+  color: #3f51b5;
+}
+
+.translated-example {
+  color: #9b959e;
+}
