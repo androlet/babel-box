@@ -8,6 +8,7 @@ import {ExercisesModule} from './exercises/exercises.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {LanguagesModule} from './languages/languages.module';
 import {AccountModule} from './account/account.module';
+import { LayoutsModule } from './layouts/layouts.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import {AccountModule} from './account/account.module';
     AccountModule,
     SearchModule,
     ExercisesModule,
+    LayoutsModule
   ],
   declarations: [
     AppComponent

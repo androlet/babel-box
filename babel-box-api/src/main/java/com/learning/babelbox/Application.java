@@ -1,5 +1,7 @@
 package com.learning.babelbox;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -24,6 +26,9 @@ import static java.util.Arrays.asList;
 @Profile("server")
 public class Application {
 
+    @Value("${database.name}")
+    private String databaseName;
+
     private String[] packagesToScanPath = {
             "com.learning.babelbox.features",
             "com.learning.babelbox.domain",
@@ -33,7 +38,7 @@ public class Application {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setUrl("jdbc:postgresql://localhost:5432/babelbox");
+        ds.setUrl("jdbc:postgresql://localhost:5432/" + databaseName);
         ds.setUsername("thomas");
         ds.setPassword("sa");
         ds.setDriverClassName("org.postgresql.Driver");
