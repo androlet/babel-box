@@ -1,5 +1,12 @@
-<div class="search-input">
-  <input type="text" [(ngModel)]="searchedTerm" />
-  <button (click)="submitSearch()">Submit</button>
-</div>
+<section class="search-input">
+  <form (submit)="submitSearch()" [formGroup]="searchTranslationsFormControls">
+      <mat-form-field appearance="standard" autocomplete="off">
+        <input matInput placeholder="new word" type="text" formControlName="searchedTherm">
+        <button type="reset" *ngIf="hasSearchedTerm()" mat-button matSuffix mat-icon-button aria-label="Clear">
+            <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary">SEARCH</button>
+  </form>
+</section>
 

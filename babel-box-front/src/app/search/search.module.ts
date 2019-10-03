@@ -2,14 +2,17 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SearchInputComponent} from './search-input/search-input.component';
 import {SearchService} from './services/search.service';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
+import { MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    HttpClientModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule
   ],
   declarations: [SearchInputComponent],
   providers: [SearchService],
