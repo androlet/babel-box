@@ -1,0 +1,29 @@
+.qcm-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.qcm-option {
+  white-space: pre-wrap;
+  width: 90%;
+  margin-top: 5%;
+  text-transform: capitalize;
+}
+
+.right-option {
+  background-color: rgb(19, 202, 19);
+}
+
+.wrong-option {
+  background-color: rgb(131, 20, 20);
+}
+
+.selected-option {
+  color: yellow;
+  box-shadow: 5px 5px 5px rgba(128, 128, 128, 0.5);
+}
+
+
+

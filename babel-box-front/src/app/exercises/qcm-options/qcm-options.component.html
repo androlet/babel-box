@@ -1,0 +1,15 @@
+<section class="qcm-options">
+    <button
+    mat-raised-button color="accent"
+    *ngFor="let option of question.options"
+    class="qcm-option"
+    (click)="selectOption(option)"
+    [ngClass]="{
+      'right-option': isCorrectingRightAnswer(option),
+      'wrong-option': isCorrectingWrongAnswer(option),
+      'selected-option': isOptionSelected(option)
+    }"
+    >
+      {{option.content.results[0].signification}}
+    </button>
+  </section>

@@ -1,5 +1,7 @@
 package com.learning.babelbox.features;
 
+import com.learning.babelbox.domain.Language;
+import com.learning.babelbox.features.dto.QuestionExercise;
 import com.learning.babelbox.features.dto.TranslationResults;
 import com.learning.babelbox.services.LanguageService;
 import com.learning.babelbox.services.TranslationService;
@@ -7,6 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.asList;
 
 @RestController
 @RequestMapping("/api/translations")
@@ -29,5 +35,18 @@ public class TranslationController {
                     searchedTerm
                 )
         );
+    }
+
+    @RequestMapping(value = "/exercises/qcm", method = RequestMethod.GET)
+    public QuestionExercise getQcm() {
+        Language from = languageService.getLanguage("en");
+        Language to = languageService.getLanguage("fr");
+        QuestionExercise exercise = new QuestionExercise(
+                asList("mean", "poor", "screw", "test").stream()
+                        .map(word -> new TranslationResults(translationService.getTranslationResults(from, to, word)))
+                        .collect(Collectors.toList())
+        );
+        exercise.setRightAnswerIndex(1);
+        return exercise;
     }
 }

@@ -38,7 +38,7 @@ public class TranslationTestFeatures extends BaseFeaturesTest {
     }
 
     @Test
-    public void should_registered_and_get_translations_WHEN_translations_have_NOT_already_been_registered() {
+    public void should_register_and_get_translations_WHEN_translations_have_NOT_already_been_registered() {
         //Given
         String searchedTerm = "hello";
         String pronunciation = "pronunciation";

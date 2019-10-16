@@ -24,7 +24,7 @@ describe('SearchInputComponent', () => {
         return fields[name];
       }
     } as FormGroup;
-  }
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -61,6 +61,5 @@ describe('SearchInputComponent', () => {
     //Then
     expect(component.resultsFound.emit).toHaveBeenCalledWith(expectedResults);
     expect(component.searchTranslationsFormControls.get('searchedTherm').value).toBe('');
-    console.log(component.searchTranslationsFormControls.get('searchedTherm').value);
   });
 });

@@ -1,23 +1,23 @@
-import {Component, NgModule} from '@angular/core';
-import {SimpleTranslationComponent} from "./simple-translation/simple-translation.component";
-import {ExercisesService} from "./services/exercises.service";
-import {ExercisesModule} from "./exercises.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Component, NgModule } from '@angular/core';
+import { ExercisesModule } from './exercises.module';
+import { QcmOptionsComponent } from './qcm-options/qcm-options.component';
+import { ExercisesService } from './services/exercises.service';
 
 @Component({
-  selector: 'app-simple-translation',
+  selector: 'app-qcm-options',
   template: ''
 })
-export class SimpleTranslationComponentTested extends SimpleTranslationComponent {}
+export class QcmOptionsComponentTested extends QcmOptionsComponent {}
 
 @NgModule({
-  declarations: [SimpleTranslationComponentTested],
+  declarations: [QcmOptionsComponentTested],
   imports: [
     ExercisesModule,
     HttpClientTestingModule
   ],
   providers: [ExercisesService],
-  exports: [SimpleTranslationComponentTested]
+  exports: [QcmOptionsComponentTested]
 })
 export class ExercisesModuleTesting {
 }

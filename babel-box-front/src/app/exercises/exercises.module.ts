@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {SimpleTranslationComponent} from "./simple-translation/simple-translation.component";
-import {FormsModule} from "@angular/forms";
-import {ExercisesService} from "./services/exercises.service";
+import {MatButtonModule} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
+import {ExercisesService} from './services/exercises.service';
+import { ExerciseTranslationsComponent } from './exercise-translations/exercise-translations.component';
+import { QcmOptionsComponent } from './qcm-options/qcm-options.component';
 
 @NgModule({
-  declarations: [SimpleTranslationComponent],
+  declarations: [ExerciseTranslationsComponent, QcmOptionsComponent],
   imports: [
     CommonModule,
+    MatButtonModule,
     FormsModule
   ],
   providers: [ExercisesService],
-  exports: [SimpleTranslationComponent]
+  exports: [ExerciseTranslationsComponent]
 })
 export class ExercisesModule {
 }
