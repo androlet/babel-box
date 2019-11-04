@@ -1,11 +1,11 @@
 <section class="qcm">
   <section class="qcm-question">{{questionExo.qcmQuestion}}</section>
-  <app-qcm-options class="qcm-options" [question]="questionExo"></app-qcm-options>
-  <section class="translation-display post-it">
+  <app-qcm-options class="qcm-options" [question]="questionExo" (userSelect)="selectOption($event)"></app-qcm-options>
+  <section class="translation-display post-it" *ngIf="isDescriptionDisplayed()">
       <div class="post-it-head">
       </div>
       <div class="post-it-body">
-          <app-translation-display [translation]="questionExo.options[1].translation"></app-translation-display>
+          <app-translation-display [translation]="getOptionTranslation()"></app-translation-display>
       </div>
   </section>
 </section>
