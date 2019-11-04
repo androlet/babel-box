@@ -3,6 +3,7 @@ import { Component, NgModule } from '@angular/core';
 import { ExercisesModule } from './exercises.module';
 import { QcmOptionsComponent } from './qcm-options/qcm-options.component';
 import { ExercisesService } from './services/exercises.service';
+import { QcmComponent } from './qcm/qcm.component';
 
 @Component({
   selector: 'app-qcm-options',
@@ -10,14 +11,20 @@ import { ExercisesService } from './services/exercises.service';
 })
 export class QcmOptionsComponentTested extends QcmOptionsComponent {}
 
+@Component({
+  selector: 'app-qcm',
+  template: ''
+})
+export class QcmComponentTested extends QcmComponent {}
+
 @NgModule({
-  declarations: [QcmOptionsComponentTested],
+  declarations: [QcmOptionsComponentTested, QcmComponentTested],
   imports: [
     ExercisesModule,
     HttpClientTestingModule
   ],
   providers: [ExercisesService],
-  exports: [QcmOptionsComponentTested]
+  exports: [QcmOptionsComponentTested, QcmComponentTested]
 })
 export class ExercisesModuleTesting {
 }

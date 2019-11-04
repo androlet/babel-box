@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BaseComponent } from 'src/app/base.component';
-import { QcmExercise, ExerciseOption } from '../domain/exercises';
+import { QcmExercise, QcmOption } from '../domain/exercises';
 
 @Component({
   selector: 'app-qcm-options',
@@ -10,9 +10,9 @@ import { QcmExercise, ExerciseOption } from '../domain/exercises';
 export class QcmOptionsComponent extends BaseComponent implements OnInit {
 
   @Input() question: QcmExercise;
-  @Output() userSelect = new EventEmitter<ExerciseOption>();
+  @Output() userSelect = new EventEmitter<QcmOption>();
 
-  private selectedOption: ExerciseOption;
+  private selectedOption: QcmOption;
 
   constructor() {
     super();
@@ -25,7 +25,7 @@ export class QcmOptionsComponent extends BaseComponent implements OnInit {
     return !this.selectedOption;
   }
 
-  selectOption(option: ExerciseOption): void {
+  selectOption(option: QcmOption): void {
     if (this.isQcmPristine()) {
       option.isUserAnswer = true;
     }
@@ -33,15 +33,15 @@ export class QcmOptionsComponent extends BaseComponent implements OnInit {
     this.userSelect.emit(this.selectedOption);
   }
 
-  isCorrectingRightAnswer(option: ExerciseOption): boolean {
+  isCorrectingRightAnswer(option: QcmOption): boolean {
     return !!this.selectedOption && option.isRightAnswer;
   }
 
-  isCorrectingWrongAnswer(option: ExerciseOption): boolean {
+  isCorrectingWrongAnswer(option: QcmOption): boolean {
     return !!option.isUserAnswer && !option.isRightAnswer;
   }
 
-  isOptionSelected(option: ExerciseOption): boolean {
+  isOptionSelected(option: QcmOption): boolean {
     return this.selectedOption === option;
   }
 }

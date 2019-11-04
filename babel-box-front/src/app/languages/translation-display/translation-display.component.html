@@ -6,7 +6,7 @@
 
   <mat-list class="examples">
       <mat-list-item *ngFor="let result of translation.results">
-        <article>
+        <article class="translation-proposal">
           <div mat-line class="signification">{{result.signification }}</div>
           <div mat-line class="original-example">{{result.originalExample}}</div>
           <div mat-line class="translated-example">{{result.translatedExample}}</div>

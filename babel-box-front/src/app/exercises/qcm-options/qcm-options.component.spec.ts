@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExercisesModuleTesting, QcmOptionsComponentTested } from '../exercises.module.testing';
 import { QCM_TRANSLATIONS__ANSWER_EQ_2 } from '../exercise-translations/mock-exo';
-import { ExerciseOption } from '../domain/exercises';
+import { QcmOption } from '../domain/exercises';
 
-fdescribe('QcmOptionsComponent', () => {
+describe('QcmOptionsComponent', () => {
   let component: QcmOptionsComponentTested;
   let fixture: ComponentFixture<QcmOptionsComponentTested>;
 
-  const expectOptionStates = (option: ExerciseOption, correctingRightAnswer: boolean, wrongAnswer: boolean, isSelected: boolean) => {
+  const expectOptionStates = (option: QcmOption, correctingRightAnswer: boolean, wrongAnswer: boolean, isSelected: boolean) => {
     expect(component.isCorrectingRightAnswer(option)).toBe(correctingRightAnswer);
     expect(component.isCorrectingWrongAnswer(option)).toBe(wrongAnswer);
     expect(component.isOptionSelected(option)).toBe(isSelected);
@@ -29,7 +29,7 @@ fdescribe('QcmOptionsComponent', () => {
   it('should create', () => {
     //given
     component.question = QCM_TRANSLATIONS__ANSWER_EQ_2;
-    
+
     //when
 
     //then

@@ -1,11 +1,13 @@
 import { TranslationResults } from '../../search/domain/translation-results';
 
-export interface ExerciseOption {
+export interface QcmOption {
   isRightAnswer: boolean;
   isUserAnswer: boolean;
-  content: TranslationResults;
+  content: string;
+  translation: TranslationResults;
 }
 
 export interface QcmExercise {
-  options: ExerciseOption[];
+  qcmQuestion: string;
+  options: QcmOption[];
 }

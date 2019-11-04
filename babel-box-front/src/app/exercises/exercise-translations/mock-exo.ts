@@ -58,21 +58,26 @@ const screw: TranslationResults = JSON.parse(`{
 }`);
 
 export const QCM_TRANSLATIONS__ANSWER_EQ_2 = {
+  qcmQuestion: poor.originalTerm,
   options: [{
       isRightAnswer: false,
-      content: mean
+      content: mean.results[0].signification,
+      translation: mean
     },
     {
       isRightAnswer: true,
-      content: poor
+      content: poor.results[0].signification,
+      translation: poor
     },
     {
       isRightAnswer: false,
-      content: screw
+      content: screw.results[0].signification,
+      translation: screw
     },
     {
       isRightAnswer: false,
-      content: test
+      content: test.results[0].signification,
+      translation: test
     }
   ]
 } as QcmExercise;
