@@ -1,6 +1,6 @@
-import {OnDestroy} from "@angular/core";
-import {Observable, Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {OnDestroy} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 export class BaseComponent implements OnDestroy {
 

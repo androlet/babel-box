@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { BaseComponent } from 'src/app/base.component';
 import { QcmExercise, QcmOption } from '../domain/exercises';
 
@@ -7,7 +7,7 @@ import { QcmExercise, QcmOption } from '../domain/exercises';
   templateUrl: './qcm-options.component.html',
   styleUrls: ['./qcm-options.component.css']
 })
-export class QcmOptionsComponent extends BaseComponent implements OnInit {
+export class QcmOptionsComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Input() question: QcmExercise;
   @Output() userSelect = new EventEmitter<QcmOption>();
@@ -19,6 +19,10 @@ export class QcmOptionsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
+    this.selectedOption = null;
   }
 
   private isQcmPristine() {

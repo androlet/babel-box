@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../../base.component';
-import { QCM_TRANSLATIONS__ANSWER_EQ_2 } from './mock-exo';
+import { QcmExercise } from '../domain/exercises';
+import { ExercisesService } from '../services/exercises.service';
 
 @Component({
   selector: 'app-exercise-translations',
@@ -9,13 +10,28 @@ import { QCM_TRANSLATIONS__ANSWER_EQ_2 } from './mock-exo';
 })
 export class ExerciseTranslationsComponent extends BaseComponent implements OnInit {
 
-  questionExo = QCM_TRANSLATIONS__ANSWER_EQ_2;
+  questionExo: QcmExercise;
 
-  constructor() {
+  constructor(private exercisesService: ExercisesService) {
     super();
   }
 
   ngOnInit() {
+    this.loadNewQcm();
   }
 
+  isLoading(): boolean {
+    return !this.questionExo;
+  }
+
+  isLoaded(): boolean {
+    return !!this.questionExo;
+  }
+
+  loadNewQcm(): void {
+    this.safelySubscriptionable(this.exercisesService.getExercise())
+    .subscribe(
+      exercise => this.questionExo = exercise
+    );
+  }
 }

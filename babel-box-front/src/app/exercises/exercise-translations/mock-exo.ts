@@ -81,3 +81,28 @@ export const QCM_TRANSLATIONS__ANSWER_EQ_2 = {
     }
   ]
 } as QcmExercise;
+
+export const QCM_TRANSLATIONS__ANSWER_EQ_3 = {
+  qcmQuestion: screw.originalTerm,
+  options: [{
+      isRightAnswer: false,
+      content: mean.results[0].signification,
+      translation: mean
+    },
+    {
+      isRightAnswer: false,
+      content: poor.results[0].signification,
+      translation: poor
+    },
+    {
+      isRightAnswer: true,
+      content: screw.results[0].signification,
+      translation: screw
+    },
+    {
+      isRightAnswer: false,
+      content: test.results[0].signification,
+      translation: test
+    }
+  ]
+} as QcmExercise;

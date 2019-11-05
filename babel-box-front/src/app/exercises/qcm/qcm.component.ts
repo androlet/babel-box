@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
 import { BaseComponent } from 'src/app/base.component';
 import { QcmOption, QcmExercise } from '../domain/exercises';
 import { TranslationResults } from 'src/app/search/domain/translation-results';
@@ -8,7 +8,7 @@ import { TranslationResults } from 'src/app/search/domain/translation-results';
   templateUrl: './qcm.component.html',
   styleUrls: ['./qcm.component.css']
 })
-export class QcmComponent extends BaseComponent implements OnInit {
+export class QcmComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Input() questionExo: QcmExercise;
   selectedOption: QcmOption;
@@ -18,6 +18,10 @@ export class QcmComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
+    this.selectedOption = null;
   }
 
   selectOption(qcmOption: QcmOption): void {
