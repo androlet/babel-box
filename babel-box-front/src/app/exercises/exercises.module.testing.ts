@@ -4,6 +4,7 @@ import { ExercisesModule } from './exercises.module';
 import { QcmOptionsComponent } from './qcm-options/qcm-options.component';
 import { ExercisesService } from './services/exercises.service';
 import { QcmComponent } from './qcm/qcm.component';
+import { ExerciseTranslationsComponent } from './exercise-translations/exercise-translations.component';
 
 @Component({
   selector: 'app-qcm-options',
@@ -17,14 +18,20 @@ export class QcmOptionsComponentTested extends QcmOptionsComponent {}
 })
 export class QcmComponentTested extends QcmComponent {}
 
+@Component({
+  selector: 'app-exercise-translations',
+  template: ''
+})
+export class ExerciseTranslationsComponentTested extends ExerciseTranslationsComponent {}
+
 @NgModule({
-  declarations: [QcmOptionsComponentTested, QcmComponentTested],
+  declarations: [QcmOptionsComponentTested, QcmComponentTested, ExerciseTranslationsComponentTested],
   imports: [
     ExercisesModule,
     HttpClientTestingModule
   ],
   providers: [ExercisesService],
-  exports: [QcmOptionsComponentTested, QcmComponentTested]
+  exports: [QcmOptionsComponentTested, QcmComponentTested, ExerciseTranslationsComponentTested]
 })
 export class ExercisesModuleTesting {
 }

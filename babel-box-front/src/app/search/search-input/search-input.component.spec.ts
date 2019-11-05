@@ -56,9 +56,9 @@ describe('SearchInputComponent', () => {
 
     //When
     component.submitSearch();
-    mockHttp.expectOne(`${BABELBOX_API_ROOT}/translations/search?searchedTerm=${searchedTermValue}`).flush(expectedResults);
 
     //Then
+    mockHttp.expectOne(`${BABELBOX_API_ROOT}/translations/search?searchedTerm=${searchedTermValue}`).flush(expectedResults);
     expect(component.resultsFound.emit).toHaveBeenCalledWith(expectedResults);
     expect(component.searchTranslationsFormControls.get('searchedTherm').value).toBe('');
   });

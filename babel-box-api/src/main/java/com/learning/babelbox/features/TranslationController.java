@@ -1,6 +1,7 @@
 package com.learning.babelbox.features;
 
 import com.learning.babelbox.domain.Language;
+import com.learning.babelbox.features.dto.QcmExercise;
 import com.learning.babelbox.features.dto.QuestionExercise;
 import com.learning.babelbox.features.dto.TranslationResults;
 import com.learning.babelbox.services.LanguageService;
@@ -38,15 +39,15 @@ public class TranslationController {
     }
 
     @RequestMapping(value = "/exercises/qcm", method = RequestMethod.GET)
-    public QuestionExercise getQcm() {
+    public QcmExercise getQcm() {
         Language from = languageService.getLanguage("en");
         Language to = languageService.getLanguage("fr");
-        QuestionExercise exercise = new QuestionExercise(
+        QcmExercise qcmExercise = new QcmExercise(
                 asList("mean", "poor", "screw", "test").stream()
-                        .map(word -> new TranslationResults(translationService.getTranslationResults(from, to, word)))
+                        .map(word -> new QcmExercise.QcmOption(translationService.getTranslationResults(from, to, word).get(0)))
                         .collect(Collectors.toList())
         );
-        exercise.setRightAnswerIndex(1);
-        return exercise;
+        qcmExercise.setRightAnswer(2);
+        return qcmExercise;
     }
 }
