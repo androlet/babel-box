@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {LanguageOption} from "../domain/language-option";
-import {LanguagesService} from "../services/languages.service";
-import {BaseComponent} from "../../base.component";
+import {LanguageOption} from '../domain/language-option';
+import {LanguagesService} from '../services/languages.service';
+import {BaseComponent} from '../../base.component';
 
 @Component({
   selector: 'app-languages-selector',
@@ -34,12 +34,18 @@ export class LanguagesSelectorComponent extends BaseComponent implements OnInit 
     return this.target.id === option.id;
   }
 
+  reverseLanguageSelected(): void {
+    const oldOl = this.original;
+    this.original = this.target;
+    this.target = oldOl;
+  }
+
   getOriginalLanguageOptions(): LanguageOption[] {
-      return this.languagesList.filter(lo => lo.id != this.target.id);
+      return this.languagesList.filter(lo => lo.id !== this.target.id);
   }
 
   getTargetLanguageOptions(): LanguageOption[] {
-      return this.languagesList.filter(lo => lo.id != this.original.id);
+      return this.languagesList.filter(lo => lo.id !== this.original.id);
   }
 
   private loadLanguages(): void {

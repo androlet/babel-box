@@ -1,6 +1,5 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {LanguagesSelectorComponent} from './languages-selector.component';
 import {LanguagesModuleTesting, LanguagesSelectorComponentTesting} from '../languages.module.testing';
 import {HttpTestingController} from '@angular/common/http/testing';
 import {BABELBOX_API_ROOT} from '../../constants';
@@ -82,6 +81,27 @@ describe('LanguagesSelectorComponent', () => {
     const targetList = component.getTargetLanguageOptions();
     expectOption(targetList[0], 'en', false, true);
     expectOption(targetList[1], 'fr', false, false);
+  });
+
+  it('SHOULD reverse languages selection' +
+    'WHEN the reverse button is clicked', () => {
+
+    //given
+    fixture.detectChanges();
+    mockHttp.expectOne(BABELBOX_API_ROOT + '/languages').flush(languageOptions);
+    component.original = languageOptions[2];
+    component.target = languageOptions[0];
+
+    //when
+    component.reverseLanguageSelected();
+
+    //then
+    const originalList = component.getOriginalLanguageOptions();
+    expectOption(originalList[0], 'en', true, false);
+    expectOption(originalList[1], 'fr', false, false);
+    const targetList = component.getTargetLanguageOptions();
+    expectOption(targetList[0], 'fr', false, false);
+    expectOption(targetList[1], 'es', false, true);
   });
 
 });

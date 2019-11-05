@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {LanguageOption} from "../domain/language-option";
-import {BABELBOX_API_ROOT} from "../../constants";
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {LanguageOption} from '../domain/language-option';
+import {BABELBOX_API_ROOT} from '../../constants';
 
 @Injectable()
 export class LanguagesService {
