@@ -1,5 +1,6 @@
 package com.learning.babelbox.security;
 
+import com.learning.babelbox.domain.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -10,9 +11,11 @@ import java.util.Collections;
 public class AuthToken implements Authentication {
 
     private final String token;
+    private final User user;
 
-    public AuthToken(String token) {
+    public AuthToken(String token, User user) {
         this.token = token;
+        this.user = user;
     }
 
     @Override
@@ -32,12 +35,12 @@ public class AuthToken implements Authentication {
 
     @Override
     public Object getPrincipal() {
-        return "User-authenticated";
+        return user;
     }
 
     @Override
     public boolean isAuthenticated() {
-        return true;
+        return user != null;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class AuthToken implements Authentication {
 
     @Override
     public String getName() {
-        return "me";
+        return user.getUsername();
     }
 
     @Override

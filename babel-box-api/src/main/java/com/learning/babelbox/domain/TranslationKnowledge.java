@@ -8,4 +8,8 @@ public class TranslationKnowledge extends EntityCore {
     private Translation translation;
     private User user;
 
+    public TranslationKnowledge(Translation translation, User user) {
+        this.translation = translation;
+        this.user = user;
+    }
 }

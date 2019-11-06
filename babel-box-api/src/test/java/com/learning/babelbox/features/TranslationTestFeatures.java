@@ -2,6 +2,7 @@ package com.learning.babelbox.features;
 
 import com.learning.babelbox.connectors.dto.ConnectorSearchResult;
 import com.learning.babelbox.domain.Translation;
+import com.learning.babelbox.domain.TranslationKnowledge;
 import com.learning.babelbox.exceptions.ReversedLanguageException;
 import com.learning.babelbox.exceptions.WrongLanguageException;
 import com.learning.babelbox.features.builders.ConnectorSearchResultBuilder;
@@ -18,6 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TranslationTestFeatures extends BaseFeaturesTest {
@@ -120,6 +122,11 @@ public class TranslationTestFeatures extends BaseFeaturesTest {
         translationsStored.addAll(TranslationBuilder.buildFrom(en, fr, "poor", asList("pauvre", "médiocre", "modeste")));
         translationsStored = translationRepositoryMock.saveAll(translationsStored);
 
+        List<TranslationKnowledge> translationKnowledgeList = translationsStored.stream()
+                .map(translation -> new TranslationKnowledge(translation, connectedUser))
+                .collect(toList());
+        translationKnowledgeRepositoryMock.saveAll(translationKnowledgeList);
+
         //When
         QcmExercise qcm = translationController.getQcm();
 
@@ -128,7 +135,7 @@ public class TranslationTestFeatures extends BaseFeaturesTest {
         String qcmQuestion = qcm.getQcmQuestion();
         List<QcmExercise.QcmOption> rightOptions = qcm.getOptions().stream()
                 .filter(option -> option.getTranslation().getOriginalTerm().equals(qcmQuestion))
-                .collect(Collectors.toList());
+                .collect(toList());
         assertThat(rightOptions).hasSize(1);
         assertThat(rightOptions.get(0).isRightAnswer()).isTrue();
         Set<String> optionsContents = qcm.getOptions().stream().map(QcmExercise.QcmOption::getContent).collect(Collectors.toSet());

@@ -18,10 +18,8 @@ public class AuthTokenProvider implements AuthenticationProvider {
     }
 
     public void authenticate(String token) throws AuthenticationException {
-        Optional<User> user = userService.findEnabledUserByToken(token);
-        if (user.isPresent()) {
-            authenticate(new AuthToken(token));
-        }
+        Optional<User> userOpt = userService.findEnabledUserByToken(token);
+        userOpt.ifPresent(user -> authenticate(new AuthToken(token, user)));
     }
 
     @Override
