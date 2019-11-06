@@ -42,7 +42,7 @@ public class UserController {
 
     @PostMapping(value = LOGIN_URL)
     public ResponseEntity login(@RequestBody Credentials credentials, HttpServletResponse response) {
-        User connectingUser = userService.loadUserByUsername(credentials.username);
+        User connectingUser = userService.loadEnabledUserByUsername(credentials.username);
         if (null == connectingUser || !connectingUser.getPassword().equals(credentials.password)) {
             return ResponseEntity.badRequest().build();
         }

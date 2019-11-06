@@ -25,6 +25,11 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
+    public User loadEnabledUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findEnabledUserByEmail(username).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
     public Optional<User> findEnabledUserByToken(String token) {
         return userRepository.findEnabledUserByToken(token);
     }

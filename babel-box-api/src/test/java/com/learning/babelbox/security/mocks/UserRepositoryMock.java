@@ -17,6 +17,15 @@ public class UserRepositoryMock extends BaseRepositoryMock<User> implements User
     }
 
     @Override
+    public Optional<User> findEnabledUserByEmail(String email) {
+        return Optional.ofNullable(
+                data.values().stream().filter(
+                        u -> u.getUsername().equals(email) && u.isEnabled()
+                ).findFirst().orElse(null)
+        );
+    }
+
+    @Override
     public Optional<User> findEnabledUserByToken(String token) {
         return data.values().stream().filter(u -> u.getToken().equals(token) && u.isEnabled()).findFirst();
     }
