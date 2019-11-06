@@ -1,4 +1,11 @@
 package com.learning.babelbox.domain;
 
-public class TranslationKnowledge {
+import javax.persistence.Entity;
+
+@Entity
+public class TranslationKnowledge extends EntityCore {
+
+    private Translation translation;
+    private User user;
+
 }
