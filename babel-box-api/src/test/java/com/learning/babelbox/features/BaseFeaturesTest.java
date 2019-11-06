@@ -3,6 +3,7 @@ package com.learning.babelbox.features;
 import com.learning.babelbox.connectors.TranslationConnector;
 import com.learning.babelbox.domain.Language;
 import com.learning.babelbox.features.mocks.LanguageRepositoryMock;
+import com.learning.babelbox.features.mocks.TranslationKnowledgeRepositoryMock;
 import com.learning.babelbox.features.mocks.TranslationRepositoryMock;
 import com.learning.babelbox.features.mocks.WordReferenceConnectorMock;
 import com.learning.babelbox.mocks.BaseRepositoryMock;
@@ -23,6 +24,7 @@ public class BaseFeaturesTest {
     protected TranslationController translationController;
     protected LanguageController languageController;
 
+    protected TranslationKnowledgeRepositoryMock translationKnowledgeRepositoryMock;
     protected TranslationRepositoryMock translationRepositoryMock;
     protected LanguageRepositoryMock languageRepositoryMock;
 
@@ -36,6 +38,7 @@ public class BaseFeaturesTest {
         languageController = applicationContext.getBean(LanguageController.class);
         languageRepositoryMock = applicationContext.getBean(LanguageRepositoryMock.class);
         translationRepositoryMock = applicationContext.getBean(TranslationRepositoryMock.class);
+        translationKnowledgeRepositoryMock = applicationContext.getBean(TranslationKnowledgeRepositoryMock.class);
         wordReferenceConnectorMock = (WordReferenceConnectorMock) applicationContext.getBean(TranslationConnector.class);
 
         en = new Language("en");

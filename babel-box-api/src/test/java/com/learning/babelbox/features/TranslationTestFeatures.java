@@ -6,11 +6,16 @@ import com.learning.babelbox.exceptions.ReversedLanguageException;
 import com.learning.babelbox.exceptions.WrongLanguageException;
 import com.learning.babelbox.features.builders.ConnectorSearchResultBuilder;
 import com.learning.babelbox.features.builders.TranslationBuilder;
+import com.learning.babelbox.features.dto.QcmExercise;
 import com.learning.babelbox.features.dto.TranslationResults;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -103,5 +108,30 @@ public class TranslationTestFeatures extends BaseFeaturesTest {
 
         //When
         translationController.getTranslations(searchedTerm);
+    }
+
+    @Test
+    public void should_get_random_qcm_exercise() {
+        //given
+        List<Translation> translationsStored = new ArrayList<>();
+        translationsStored.addAll(TranslationBuilder.buildFrom(en, fr, "screw", asList("visser", "baiser", "hélice")));
+        translationsStored.addAll(TranslationBuilder.buildFrom(en, fr, "test", asList("interrogation", "test", "analyse")));
+        translationsStored.addAll(TranslationBuilder.buildFrom(en, fr, "mean", asList("signifier", "vouloir dire", "être sincère")));
+        translationsStored.addAll(TranslationBuilder.buildFrom(en, fr, "poor", asList("pauvre", "médiocre", "modeste")));
+        translationsStored = translationRepositoryMock.saveAll(translationsStored);
+
+        //When
+        QcmExercise qcm = translationController.getQcm();
+
+        //Then
+        assertThat(qcm.getOptions()).hasSize(4);
+        String qcmQuestion = qcm.getQcmQuestion();
+        List<QcmExercise.QcmOption> rightOptions = qcm.getOptions().stream()
+                .filter(option -> option.getTranslation().getOriginalTerm().equals(qcmQuestion))
+                .collect(Collectors.toList());
+        assertThat(rightOptions).hasSize(1);
+        assertThat(rightOptions.get(0).isRightAnswer()).isTrue();
+        Set<String> optionsContents = qcm.getOptions().stream().map(QcmExercise.QcmOption::getContent).collect(Collectors.toSet());
+        assertThat(optionsContents).hasSize(4);
     }
 }

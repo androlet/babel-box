@@ -39,7 +39,7 @@ public class TranslationService {
     }
 
     @Transactional
-    public List<Translation> getTranslationResults(Language source, Language target, String searchedTerm) {
+    public List<Translation> searchTranslations(Language source, Language target, String searchedTerm) {
         List<Translation> translations = translationRepository.findByOriginalTerm(searchedTerm);
         if(!translations.isEmpty()) {
             return translations;

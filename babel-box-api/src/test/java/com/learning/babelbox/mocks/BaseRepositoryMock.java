@@ -50,7 +50,7 @@ public class BaseRepositoryMock<T extends EntityCore> implements JpaRepository<T
 
     @Override
     public void deleteById(Long aLong) {
-
+        data.remove(aLong);
     }
 
     @Override

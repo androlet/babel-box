@@ -123,6 +123,25 @@ public class AuthenticationIntegrationTest {
     }
 
     @Test
+    public void it_should_not_login_user_WHEN_user_is_not_active() throws Exception {
+
+        //Given
+        String email = "test@babelbox.com";
+        String password = "password";
+        userRepositoryMock.save(UserBuilder.buildDisabledUserFrom(email, password));
+        String requestPayload = new JSONObject().put("username", email).put("password", "password").toString();
+        MockHttpServletRequestBuilder requestBuilder = requestBuilder(HttpMethod.POST, API_LOGIN).content(requestPayload);
+
+        //When
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        //Then
+        Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(400);
+        Assertions.assertThat(userRepositoryMock.findAll().get(0).getToken()).isNull();
+        Assertions.assertThat(result.getResponse().getCookie("Bearer")).isNull();
+    }
+
+    @Test
     public void it_should_authenticate_user_WHEN_request_has_valid_token() throws Exception {
 
         //Given
