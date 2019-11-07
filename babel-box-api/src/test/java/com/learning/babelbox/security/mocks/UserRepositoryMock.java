@@ -11,15 +11,20 @@ import static java.util.stream.Collectors.toList;
 
 @Component
 public class UserRepositoryMock extends BaseRepositoryMock<User> implements UserRepository {
+
+    public UserRepositoryMock() {
+        super(User.class);
+    }
+
     @Override
     public User findByEmail(String email) {
-        return data.values().stream().filter(u -> u.getUsername().equals(email)).findFirst().orElse(null);
+        return getRepositoryData().values().stream().filter(u -> u.getUsername().equals(email)).findFirst().orElse(null);
     }
 
     @Override
     public Optional<User> findEnabledUserByEmail(String email) {
         return Optional.ofNullable(
-                data.values().stream().filter(
+                getRepositoryData().values().stream().filter(
                         u -> u.getUsername().equals(email) && u.isEnabled()
                 ).findFirst().orElse(null)
         );
@@ -27,6 +32,6 @@ public class UserRepositoryMock extends BaseRepositoryMock<User> implements User
 
     @Override
     public Optional<User> findEnabledUserByToken(String token) {
-        return data.values().stream().filter(u -> u.getToken().equals(token) && u.isEnabled()).findFirst();
+        return getRepositoryData().values().stream().filter(u -> u.getToken().equals(token) && u.isEnabled()).findFirst();
     }
 }

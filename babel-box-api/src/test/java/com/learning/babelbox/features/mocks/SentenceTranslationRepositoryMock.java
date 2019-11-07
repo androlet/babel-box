@@ -10,9 +10,14 @@ import java.util.Optional;
 
 @Component
 public class SentenceTranslationRepositoryMock extends BaseRepositoryMock<SentenceTranslation> implements SentenceTranslationRepository {
+
+    public SentenceTranslationRepositoryMock() {
+        super(SentenceTranslation.class);
+    }
+
     @Override
     public Optional<SentenceTranslation> findByOriginalSentenceAndTargetSentence(Sentence original, Sentence target) {
-        return data.values().stream().filter(
+        return getRepositoryData().values().stream().filter(
                 st -> st.getOriginalSentence().getId().equals(original.getId()) &&
                         st.getTargetSentence().getId().equals(target.getId())
         ).findFirst();

@@ -16,11 +16,15 @@ import java.util.Set;
 @Component
 public class TranslationKnowledgeRepositoryMock extends BaseRepositoryMock<TranslationKnowledge> implements TranslationKnowledgeRepository {
 
+    public TranslationKnowledgeRepositoryMock() {
+        super(TranslationKnowledge.class);
+    }
+
     @Override
     public List<TranslationKnowledge> findMostLessRemainedTranslationKnowledges(Language source, Language target, User user, Pageable pageable) {
         Set<String> originalTerms = new HashSet<>();
         List<TranslationKnowledge> results = new ArrayList<>();
-        data.values().stream()
+        getRepositoryData().values().stream()
                 .filter(translationKnowledge ->
                         translationKnowledge.getTranslation().getOriginalTerm().getLanguage().getId().equals(source.getId())
                                 && translationKnowledge.getTranslation().getSignification().getLanguage().getId().equals(target.getId())

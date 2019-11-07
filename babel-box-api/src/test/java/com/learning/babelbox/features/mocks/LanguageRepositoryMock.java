@@ -8,10 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class LanguageRepositoryMock extends BaseRepositoryMock<Language> implements LanguageRepository {
 
+    public LanguageRepositoryMock() {
+        super(Language.class);
+    }
+
     @Override
     public Language findByLocaleCode(String localeCode) {
-        return data.values().stream()
+        return getRepositoryData().values().stream()
                 .filter(language -> language.getLocaleCode().equals(localeCode))
-                .findFirst().get();
+                .findFirst().orElse(null);
     }
 }

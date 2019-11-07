@@ -7,4 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class WordRepositoryMock extends BaseRepositoryMock<Word> implements WordRepository {
+
+    public WordRepositoryMock() {
+        super(Word.class);
+    }
 }

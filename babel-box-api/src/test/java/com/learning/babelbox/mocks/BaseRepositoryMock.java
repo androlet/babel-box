@@ -8,14 +8,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 public class BaseRepositoryMock<T extends EntityCore> implements JpaRepository<T, Long> {
 
+    private Class<T> type;
     private static Long autoIncrementer = 1L;
-    protected Map<Long, T> data;
+    private static Map<Long, EntityCore> data;
 
-    public BaseRepositoryMock(){
+    public BaseRepositoryMock(Class<T> type){
+        this.type = type;
         reset();
     }
 
@@ -23,9 +26,21 @@ public class BaseRepositoryMock<T extends EntityCore> implements JpaRepository<T
         data = new LinkedHashMap<>();
     }
 
+    protected Map<Long, T> getRepositoryData() {
+        Map<Long, T> results = new LinkedHashMap<>();
+        data.values().stream()
+            .filter(entity -> type.isInstance(entity))
+            .forEach(entity -> results.put(entity.getId(), (T)entity));
+        return results;
+    }
+
+    protected Map<Long, EntityCore> getRepositoriesData() {
+        return data;
+    }
+
     @Override
     public List<T> findAll() {
-        return new ArrayList<>(data.values());
+        return new ArrayList<>(getRepositoryData().values());
     }
 
     @Override
@@ -50,7 +65,7 @@ public class BaseRepositoryMock<T extends EntityCore> implements JpaRepository<T
 
     @Override
     public void deleteById(Long aLong) {
-        data.remove(aLong);
+        getRepositoryData().remove(aLong);
     }
 
     @Override
@@ -71,12 +86,21 @@ public class BaseRepositoryMock<T extends EntityCore> implements JpaRepository<T
     @Override
     public <S extends T> S save(S s) {
         Long id = s.getId();
-        if (id != null && data.get(id) != null) {
-            data.put(id, s);
+        for(Field field : s.getClass().getDeclaredFields()) {
+            if (EntityCore.class.isInstance(field)) {
+                try {
+                    save((S) field.get(s));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (id != null && getRepositoryData().get(id) != null) {
+            getRepositoryData().put(id, s);
         } else {
             id = autoIncrementer++;
             ReflectionTestUtils.setField(s, "id", id);
-            data.put(id, s);
+            getRepositoriesData().put(id, s);
         }
         return s;
     }

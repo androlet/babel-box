@@ -7,4 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SignificationRepositoryMock extends BaseRepositoryMock<Signification> implements SignificationRepository {
+
+    public SignificationRepositoryMock() {
+        super(Signification.class);
+    }
 }

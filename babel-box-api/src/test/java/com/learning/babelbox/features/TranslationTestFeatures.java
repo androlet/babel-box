@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,11 +29,15 @@ public class TranslationTestFeatures extends BaseFeaturesTest {
     }
 
     @Test
-    public void should_get_translations_WHEN_translations_have_already_been_registered() {
+    public void should_respond_translations_WHEN_user_have_already_research_the_word() {
         //Given
         String searchedTerm = "hello";
         List<String> expectedTranslations = asList("salut", "bonjour");
-        translationRepositoryMock.saveAll(TranslationBuilder.buildFrom(en, fr, searchedTerm, expectedTranslations));
+        translationKnowledgeRepositoryMock.saveAll(
+                TranslationBuilder.buildFrom(en, fr, searchedTerm, expectedTranslations).stream()
+                .map(translation -> new TranslationKnowledge(translation, connectedUser))
+                .collect(toList())
+        );
 
         //When
         TranslationResults results = translationController.getTranslations(searchedTerm);
@@ -45,7 +48,28 @@ public class TranslationTestFeatures extends BaseFeaturesTest {
     }
 
     @Test
-    public void should_register_and_get_translations_WHEN_translations_have_NOT_already_been_registered() {
+    public void should_save_data_AND_respond_translations_WHEN_research_already_occured_with_another_user() {
+        //Given
+        String searchedTerm = "hello";
+        List<String> expectedTranslations = asList("salut", "bonjour");
+        translationRepositoryMock.saveAll(TranslationBuilder.buildFrom(en, fr, searchedTerm, expectedTranslations));
+
+        //When
+        TranslationResults results = translationController.getTranslations(searchedTerm);
+
+        //Then
+        List<TranslationKnowledge> storedData = translationKnowledgeRepositoryMock.findAll();
+        assertThat(storedData.size()).isEqualTo(2);
+        assertThat(storedData.get(0).getUser()).isEqualTo(connectedUser);
+        assertThat(storedData.get(0).getTranslation()).isEqualTo(expectedTranslations.get(0));
+        assertThat(storedData.get(0).getTranslation()).isEqualTo(expectedTranslations.get(1));
+
+        assertThat(results.getResults().get(0).getSignification()).isEqualTo(expectedTranslations.get(0));
+        assertThat(results.getResults().get(1).getSignification()).isEqualTo(expectedTranslations.get(1));
+    }
+
+    @Test
+    public void should_save_data_AND_respond_translations_WHEN_nobody_has_researched_the_word_yet() {
         //Given
         String searchedTerm = "hello";
         String pronunciation = "pronunciation";
@@ -77,15 +101,17 @@ public class TranslationTestFeatures extends BaseFeaturesTest {
         TranslationResults results = translationController.getTranslations(searchedTerm);
 
         //Then
-        List<Translation> storedData = translationRepositoryMock.findAll();
+        List<TranslationKnowledge> storedData = translationKnowledgeRepositoryMock.findAll();
         assertThat(storedData.size()).isEqualTo(4);
+        assertThat(storedData.get(0).getUser()).isEqualTo(connectedUser);
+
         assertThat(results.getResults().get(0).getSignification()).isEqualTo("salut");
         assertThat(results.getResults().get(1).getSignification()).isEqualTo("salutation");
-        assertThat(storedData.get(1).getOriginalExample()).isEqualTo("An example with hello !");
-        assertThat(storedData.get(1).getTranslatedExample()).isEqualTo("Un exemple avec salutation !");
+        assertThat(storedData.get(1).getTranslation().getOriginalExample()).isEqualTo("An example with hello !");
+        assertThat(storedData.get(1).getTranslation().getTranslatedExample()).isEqualTo("Un exemple avec salutation !");
         assertThat(results.getResults().get(2).getSignification()).isEqualTo("bonjour");
         assertThat(results.getResults().get(3).getSignification()).isEqualTo("salutation");
-        assertThat(storedData.get(3).getTranslatedExample()).isEqualTo(null);
+        assertThat(storedData.get(3).getTranslation().getTranslatedExample()).isEqualTo(null);
     }
 
     @Test(expected = ReversedLanguageException.class)

@@ -11,9 +11,13 @@ import java.util.stream.Collectors;
 @Component
 public class TranslationRepositoryMock extends BaseRepositoryMock<Translation> implements TranslationRepository {
 
+    public TranslationRepositoryMock() {
+        super(Translation.class);
+    }
+
     @Override
     public List<Translation> findByOriginalTerm(String originalTerm) {
-        return data.values().stream()
+        return getRepositoryData().values().stream()
                 .filter(translation -> translation.getOriginalTerm().getSpelling().equals(originalTerm))
                 .collect(Collectors.toList());
     }

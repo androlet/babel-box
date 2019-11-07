@@ -10,9 +10,14 @@ import java.util.Optional;
 
 @Component
 public class SentenceRepositoryMock extends BaseRepositoryMock<Sentence> implements SentenceRepository {
+
+    public SentenceRepositoryMock() {
+        super(Sentence.class);
+    }
+
     @Override
     public Optional<Sentence> findByLanguageAndContent(Language language, String content) {
-        return data.values().stream().filter(
+        return getRepositoryData().values().stream().filter(
                 s -> s.getLanguage().getId().equals(language.getId()) &&
                         s.getContent().equals(content)
         ).findFirst();
