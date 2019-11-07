@@ -1,5 +1,11 @@
 package com.learning.babelbox;
 
+import com.learning.babelbox.domain.Translation;
+import com.learning.babelbox.domain.TranslationKnowledge;
+import com.learning.babelbox.domain.User;
+import com.learning.babelbox.repository.TranslationKnowledgeRepository;
+import com.learning.babelbox.repository.TranslationRepository;
+import com.learning.babelbox.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +23,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+
+import java.util.List;
 
 import static java.util.Arrays.asList;
 
@@ -63,8 +71,18 @@ public class Application {
         return txManager;
     }
 
+    public static void fixDB(ApplicationContext context) {
+        List<Translation> translations = context.getBean(TranslationRepository.class).findAll();
+        User user = context.getBean(UserRepository.class).findByEmail("test@yopmail.com");
+        TranslationKnowledgeRepository repository = context.getBean(TranslationKnowledgeRepository.class);
+        for (Translation translation : translations) {
+            repository.save(new TranslationKnowledge(translation, user));
+        }
+    }
+
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(Application.class, args);
         asList(context.getBeanDefinitionNames()).forEach(name -> System.out.println(name));
+        //fixDB(context);
     }
 }

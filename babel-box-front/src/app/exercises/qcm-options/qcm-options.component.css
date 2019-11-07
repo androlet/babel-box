@@ -6,8 +6,10 @@
   white-space: pre-wrap;
   width: 100%;
   margin-top: 5%;
-  text-transform: capitalize;
   background-color: rgb(147, 108, 197);
+}
+.qcm-option::first-letter {
+  text-transform: uppercase;
 }
 
 .right-option {

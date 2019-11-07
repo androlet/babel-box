@@ -10,9 +10,9 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class ErrorHandlerController {
 
-
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Error> handleException(Exception ex) {
+        System.err.println(ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new Error("The server has encounter an unexpected error."));
     }

@@ -1,20 +1,25 @@
 package com.learning.babelbox.features.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.learning.babelbox.domain.Translation;
+import com.learning.babelbox.domain.TranslationKnowledge;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 
 public class QcmExercise {
 
     private String qcmQuestion;
     private List<QcmOption> options;
 
-    public QcmExercise(List<QcmOption> options) {
-        this.qcmQuestion = qcmQuestion;
-        this.options = options;
+    private QcmExercise(List<TranslationKnowledge> options) {
+        this.options = options.stream().map(QcmOption::new).collect(toList());
+    }
+
+    public QcmExercise(List<TranslationKnowledge> options, int answerIndex) {
+        this(options);
+        setRightAnswer(answerIndex);
     }
 
     public void setRightAnswer(int index) {
@@ -33,9 +38,9 @@ public class QcmExercise {
 
     public static class QcmOption {
 
-        public QcmOption(Translation translation) {
-            this.content = translation.getSignification().getDescription();
-            this.translation = new TranslationResults(asList(translation));
+        public QcmOption(TranslationKnowledge translationKnowledge) {
+            this.content = translationKnowledge.getTranslation().getSignification().getDescription();
+            this.translation = new TranslationResults(asList(translationKnowledge.getTranslation()));
             this.isRightAnswer = false;
         }
 

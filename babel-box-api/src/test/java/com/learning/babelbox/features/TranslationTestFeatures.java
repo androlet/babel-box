@@ -127,6 +127,10 @@ public class TranslationTestFeatures extends BaseFeaturesTest {
                 .collect(toList());
         translationKnowledgeRepositoryMock.saveAll(translationKnowledgeList);
 
+        int randomPositionRightAnswer = 2;
+        randomProviderMock.setNextRandomNumber(randomPositionRightAnswer);
+
+
         //When
         QcmExercise qcm = translationController.getQcm();
 
@@ -137,7 +141,8 @@ public class TranslationTestFeatures extends BaseFeaturesTest {
                 .filter(option -> option.getTranslation().getOriginalTerm().equals(qcmQuestion))
                 .collect(toList());
         assertThat(rightOptions).hasSize(1);
-        assertThat(rightOptions.get(0).isRightAnswer()).isTrue();
+        QcmExercise.QcmOption rightOption = qcm.getOptions().get(randomPositionRightAnswer);
+        assertThat(rightOption.isRightAnswer()).isTrue();
         Set<String> optionsContents = qcm.getOptions().stream().map(QcmExercise.QcmOption::getContent).collect(Collectors.toSet());
         assertThat(optionsContents).hasSize(4);
     }

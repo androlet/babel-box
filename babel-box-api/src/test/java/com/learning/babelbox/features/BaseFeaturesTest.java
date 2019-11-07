@@ -8,6 +8,7 @@ import com.learning.babelbox.features.mocks.TranslationKnowledgeRepositoryMock;
 import com.learning.babelbox.features.mocks.TranslationRepositoryMock;
 import com.learning.babelbox.features.mocks.WordReferenceConnectorMock;
 import com.learning.babelbox.mocks.BaseRepositoryMock;
+import com.learning.babelbox.platform.RandomProviderMock;
 import com.learning.babelbox.security.AuthToken;
 import com.learning.babelbox.security.mocks.UserRepositoryMock;
 import org.springframework.context.ApplicationContext;
@@ -36,12 +37,17 @@ public class BaseFeaturesTest {
     protected LanguageRepositoryMock languageRepositoryMock;
     protected UserRepositoryMock userRepositoryMock;
 
+    protected RandomProviderMock randomProviderMock;
+
     protected WordReferenceConnectorMock wordReferenceConnectorMock;
 
     protected void initContext() {
         applicationContext = new AnnotationConfigApplicationContext(BaseFeaturesTest.class);
         applicationContext.getBeansOfType(BaseRepositoryMock.class)
                 .values().stream().forEach(BaseRepositoryMock::reset);
+
+        randomProviderMock = applicationContext.getBean(RandomProviderMock.class);
+
         translationController = applicationContext.getBean(TranslationController.class);
         languageController = applicationContext.getBean(LanguageController.class);
 

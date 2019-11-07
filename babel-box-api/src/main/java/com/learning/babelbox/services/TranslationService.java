@@ -5,6 +5,7 @@ import com.learning.babelbox.connectors.dto.ConnectorSearchResult;
 import com.learning.babelbox.domain.*;
 import com.learning.babelbox.exceptions.ReversedLanguageException;
 import com.learning.babelbox.exceptions.WrongLanguageException;
+import com.learning.babelbox.features.dto.QcmExercise;
 import com.learning.babelbox.features.dto.TranslationResults;
 import com.learning.babelbox.repository.TranslationRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Arrays.asList;
 
 @Service
 public class TranslationService {
