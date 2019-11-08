@@ -1,6 +1,7 @@
 package com.learning.babelbox.services;
 
 import com.learning.babelbox.domain.Language;
+import com.learning.babelbox.domain.Translation;
 import com.learning.babelbox.domain.TranslationKnowledge;
 import com.learning.babelbox.domain.User;
 import com.learning.babelbox.exceptions.UnavailableExerciseException;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -33,6 +35,22 @@ public class TranslationKnowledgeService {
         this.userService = userService;
     }
 
+    @Transactional(readOnly = true)
+    public List<TranslationKnowledge> findByUserAndTerm(Language source, Language target, String searchedTerm) {
+        User currentUser = userService.current();
+        return translationKnowledgeRepository.findByUserAndOriginalTerm(source, target, currentUser, searchedTerm);
+    }
+
+    @Transactional
+    public List<TranslationKnowledge> create(List<Translation> translations) {
+        User currentUser = userService.current();
+        return translationKnowledgeRepository.saveAll(
+                translations.stream()
+                    .map(translation -> new TranslationKnowledge(translation, currentUser))
+                    .collect(Collectors.toList())
+        );
+    }
+
     @Transactional
     public QcmExercise generateQcmExercise(Language source, Language target) {
         User currentUser = userService.current();
@@ -46,12 +64,14 @@ public class TranslationKnowledgeService {
         );
     }
 
+    @Transactional
     private List<TranslationKnowledge> adjustsQcmRemainings(List<TranslationKnowledge> options, int rightAnswerIndex) {
         options.add(rightAnswerIndex, remainTranslationKnowledge(options.remove(rightAnswerIndex)));
         return options;
     }
 
-    private TranslationKnowledge remainTranslationKnowledge(TranslationKnowledge translationKnowledge) {
+    @Transactional
+    public TranslationKnowledge remainTranslationKnowledge(TranslationKnowledge translationKnowledge) {
         translationKnowledge.increaseRemainingTimes();
         return translationKnowledgeRepository.save(translationKnowledge);
     }

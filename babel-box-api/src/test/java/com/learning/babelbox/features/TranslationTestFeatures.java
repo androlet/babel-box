@@ -61,8 +61,9 @@ public class TranslationTestFeatures extends BaseFeaturesTest {
         List<TranslationKnowledge> storedData = translationKnowledgeRepositoryMock.findAll();
         assertThat(storedData.size()).isEqualTo(2);
         assertThat(storedData.get(0).getUser()).isEqualTo(connectedUser);
-        assertThat(storedData.get(0).getTranslation()).isEqualTo(expectedTranslations.get(0));
-        assertThat(storedData.get(0).getTranslation()).isEqualTo(expectedTranslations.get(1));
+        assertThat(storedData.get(0).getTranslation().getSignification().getDescription()).isEqualTo(expectedTranslations.get(0));
+        assertThat(storedData.get(1).getUser()).isEqualTo(connectedUser);
+        assertThat(storedData.get(1).getTranslation().getSignification().getDescription()).isEqualTo(expectedTranslations.get(1));
 
         assertThat(results.getResults().get(0).getSignification()).isEqualTo(expectedTranslations.get(0));
         assertThat(results.getResults().get(1).getSignification()).isEqualTo(expectedTranslations.get(1));

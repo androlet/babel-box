@@ -12,12 +12,24 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class TranslationKnowledgeRepositoryMock extends BaseRepositoryMock<TranslationKnowledge> implements TranslationKnowledgeRepository {
 
     public TranslationKnowledgeRepositoryMock() {
         super(TranslationKnowledge.class);
+    }
+
+    @Override
+    public List<TranslationKnowledge> findByUserAndOriginalTerm(Language source, Language target, User user, String originalTerm) {
+        return getRepositoryData().values().stream()
+                .filter(translationKnowledge ->
+                        translationKnowledge.getTranslation().getOriginalTerm().getLanguage().getId().equals(source.getId())
+                            && translationKnowledge.getTranslation().getSignification().getLanguage().getId().equals(target.getId())
+                            && translationKnowledge.getUser().getId().equals(user.getId())
+                            && translationKnowledge.getTranslation().getOriginalTerm().getSpelling().equals(originalTerm)
+                ).collect(Collectors.toList());
     }
 
     @Override
