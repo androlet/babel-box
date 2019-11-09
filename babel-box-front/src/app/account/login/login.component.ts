@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AccountService} from '../account.service';
 import {BaseComponent} from '../../base.component';
 import {Credentials} from '../credentials';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,10 @@ export class LoginComponent extends BaseComponent implements OnInit {
     password: new FormControl('password', Validators.required)
   });
 
-  private isCredentialsValid = false;
+  private credentialsInvalid = false;
   private hasFormBeenSubmit = false;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private router: Router) {
     super();
   }
 
@@ -34,15 +35,16 @@ export class LoginComponent extends BaseComponent implements OnInit {
   }
 
   isCredentialsInvalid() {
-    return this.hasFormBeenSubmit && !this.isCredentialsValid;
+    return this.hasFormBeenSubmit && this.credentialsInvalid;
   }
 
   tryLogin() {
     this.hasFormBeenSubmit = true;
     this.safelySubscriptionable(this.accountService.login(this.retrieveForminputs())).subscribe(() => {
-      this.isCredentialsValid = true;
+      this.credentialsInvalid = false;
+      this.router.navigateByUrl('/front-office/search');
     }, (error) => {
-      this.isCredentialsValid = false;
+      this.credentialsInvalid = true;
     });
   }
 

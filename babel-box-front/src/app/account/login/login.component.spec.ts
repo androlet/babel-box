@@ -1,13 +1,15 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {AccountModuleTesting, LoginComponentTested} from '../account.module.testing';
+import {AccountModuleTesting, LoginComponentTested, RouterMock} from '../account.module.testing';
 import {HttpTestingController} from '@angular/common/http/testing';
 import {FormGroup} from '@angular/forms';
 import {BABELBOX_API_ROOT} from '../../constants';
+import { Router } from '@angular/router';
 
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponentTested;
   let fixture: ComponentFixture<LoginComponentTested>;
+  let mockRouter: RouterMock;
   let mockHttp: HttpTestingController;
 
   beforeEach(async(() => {
@@ -19,6 +21,7 @@ fdescribe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponentTested);
     component = fixture.componentInstance;
 
+    mockRouter = TestBed.get(Router);
     mockHttp = TestBed.get(HttpTestingController);
   }));
 
@@ -49,6 +52,7 @@ fdescribe('LoginComponent', () => {
     //then
     mockHttp.expectNone('/api/login');
     expect(component.isCredentialsInvalid()).toBe(true);
+    expect(mockRouter.getCurrentUrl()).toBe('initial');
   });
 
   it('should trigger event "logged in" WHEN credentials are valid AND form has been submitted', () => {
@@ -71,5 +75,6 @@ fdescribe('LoginComponent', () => {
 
     //then
     expect(component.isCredentialsInvalid()).toBe(false);
+    expect(mockRouter.getCurrentUrl()).toBe('/front-office/search');
   });
 });

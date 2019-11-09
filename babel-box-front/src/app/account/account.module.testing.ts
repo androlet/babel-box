@@ -3,6 +3,19 @@ import {LoginComponent} from './login/login.component';
 import {AccountService} from './account.service';
 import {AccountModule} from './account.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { Router } from '@angular/router';
+
+export class RouterMock {
+  private currentUrl = 'initial';
+
+  getCurrentUrl(): string {
+    return this.currentUrl;
+  }
+
+  navigateByUrl(url: string) {
+    this.currentUrl = url;
+  }
+}
 
 @Component({
   selector: 'app-login',
@@ -17,7 +30,10 @@ export class LoginComponentTested extends  LoginComponent {}
   ],
   declarations: [LoginComponentTested],
   providers: [
-    AccountService
+    AccountService,
+    {
+      provide: Router, useClass: RouterMock
+    }
   ],
   exports: [LoginComponentTested]
 })
