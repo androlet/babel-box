@@ -3,14 +3,13 @@ package com.learning.babelbox.security;
 import com.learning.babelbox.mocks.BaseRepositoryMock;
 import com.learning.babelbox.platform.UUIDProviderMock;
 import com.learning.babelbox.security.builders.UserBuilder;
-import com.learning.babelbox.security.mocks.UserRepositoryMock;
+import com.learning.babelbox.mocks.UserRepositoryMock;
 import org.assertj.core.api.Assertions;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -47,6 +46,7 @@ public class AuthenticationIntegrationTest {
     private UUIDProviderMock uuidProviderMock;
 
     private static final String EXPECTED_UUID = "753f99e4-cb2f-43c3-be97-23012ea6f920";
+    private static final String EXPECTED_UNAUTHENTICATED_JSON = "{\"message\":\"Missing/Invalid token.\"}";
 
     @Before
     public void setup() {
@@ -56,7 +56,7 @@ public class AuthenticationIntegrationTest {
                 .build();
         uuidProviderMock.setUuid(EXPECTED_UUID);
         wac.getBeansOfType(BaseRepositoryMock.class)
-                .values().stream().forEach(BaseRepositoryMock::reset);
+                .values().forEach(BaseRepositoryMock::reset);
     }
 
     private MockHttpServletRequestBuilder requestBuilder(HttpMethod method, String url) {
@@ -174,7 +174,8 @@ public class AuthenticationIntegrationTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
         //Then
-        Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(403);
+        Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(401);
+        Assertions.assertThat(result.getResponse().getContentAsString()).isEqualTo(EXPECTED_UNAUTHENTICATED_JSON);
     }
 
     @Test
@@ -187,7 +188,8 @@ public class AuthenticationIntegrationTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
         //Then
-        Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(403);
+        Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(401);
+        Assertions.assertThat(result.getResponse().getContentAsString()).isEqualTo(EXPECTED_UNAUTHENTICATED_JSON);
     }
 
     @Test
@@ -205,6 +207,7 @@ public class AuthenticationIntegrationTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
         //Then
-        Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(403);
+        Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(401);
+        Assertions.assertThat(result.getResponse().getContentAsString()).isEqualTo(EXPECTED_UNAUTHENTICATED_JSON);
     }
  }

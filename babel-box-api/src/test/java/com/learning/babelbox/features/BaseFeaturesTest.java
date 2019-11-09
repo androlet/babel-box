@@ -10,7 +10,7 @@ import com.learning.babelbox.features.mocks.WordReferenceConnectorMock;
 import com.learning.babelbox.mocks.BaseRepositoryMock;
 import com.learning.babelbox.platform.RandomProviderMock;
 import com.learning.babelbox.security.AuthToken;
-import com.learning.babelbox.security.mocks.UserRepositoryMock;
+import com.learning.babelbox.mocks.UserRepositoryMock;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,7 +20,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import static com.learning.babelbox.security.builders.UserBuilder.buildActiveUserFrom;
 
 @Configuration
-@ComponentScan({"com.learning.babelbox.*"})
+@ComponentScan(
+        value = {
+                "com.learning.babelbox.connectors",
+                "com.learning.babelbox.domain",
+                "com.learning.babelbox.exceptions",
+                "com.learning.babelbox.features",
+                "com.learning.babelbox.platform",
+                "com.learning.babelbox.repository",
+                "com.learning.babelbox.services",
+                "com.learning.babelbox.mocks"
+        }
+)
 public class BaseFeaturesTest {
 
     public User connectedUser;

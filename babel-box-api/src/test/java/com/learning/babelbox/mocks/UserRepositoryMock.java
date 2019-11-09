@@ -1,4 +1,4 @@
-package com.learning.babelbox.security.mocks;
+package com.learning.babelbox.mocks;
 
 import com.learning.babelbox.domain.User;
 import com.learning.babelbox.mocks.BaseRepositoryMock;

@@ -1,5 +1,6 @@
 package com.learning.babelbox.security;
 
+import com.learning.babelbox.exceptions.UnauthenticatedUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.filter.OncePerRequestFilter;
 

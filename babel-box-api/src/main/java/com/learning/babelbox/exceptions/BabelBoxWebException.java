@@ -15,6 +15,11 @@ public class BabelBoxWebException extends BabelBoxException {
         return this;
     }
 
+    public BabelBoxWebException with(String errorMessage) {
+        this.errorMessage = errorMessage;
+        return this;
+    }
+
     public String getErrorMessage() {
         return errorMessage;
     }
