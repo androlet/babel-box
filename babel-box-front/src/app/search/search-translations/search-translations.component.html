@@ -1,4 +1,4 @@
-<section>
+<section class="search-translations centered">
   <app-search-input (resultsFound)="loadResults($event)"></app-search-input>
   <app-translation-display *ngIf="hasSomeResults()" [translation]="translations"></app-translation-display>
 </section>

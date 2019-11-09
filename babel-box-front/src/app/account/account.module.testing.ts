@@ -1,8 +1,8 @@
 import {Component, NgModule} from '@angular/core';
 import {LoginComponent} from './login/login.component';
-import {AccountService} from "./account.service";
-import {AccountModule} from "./account.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {AccountService} from './account.service';
+import {AccountModule} from './account.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,9 @@ export class LoginComponentTested extends  LoginComponent {}
     HttpClientTestingModule
   ],
   declarations: [LoginComponentTested],
-  providers: [AccountService],
+  providers: [
+    AccountService
+  ],
   exports: [LoginComponentTested]
 })
 export class AccountModuleTesting { }

@@ -1,12 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {LoginComponent} from './login.component';
-import {AccountModuleTesting, LoginComponentTested} from "../account.module.testing";
-import {HttpTestingController} from "@angular/common/http/testing";
-import {FormGroup} from "@angular/forms";
-import {BABELBOX_API_ROOT} from "../../constants";
+import {AccountModuleTesting, LoginComponentTested} from '../account.module.testing';
+import {HttpTestingController} from '@angular/common/http/testing';
+import {FormGroup} from '@angular/forms';
+import {BABELBOX_API_ROOT} from '../../constants';
 
-describe('LoginComponent', () => {
+fdescribe('LoginComponent', () => {
   let component: LoginComponentTested;
   let fixture: ComponentFixture<LoginComponentTested>;
   let mockHttp: HttpTestingController;
@@ -44,7 +43,8 @@ describe('LoginComponent', () => {
 
     //when
     component.tryLogin();
-    mockHttp.expectOne({url: `${BABELBOX_API_ROOT}/login`, method: 'POST'}).flush(null, {headers: {}, status: 404, statusText: 'NOT_FOUND'});
+    mockHttp.expectOne({url: `${BABELBOX_API_ROOT}/login`, method: 'POST'})
+      .flush(null, {headers: {}, status: 404, statusText: 'NOT_FOUND'});
 
     //then
     mockHttp.expectNone('/api/login');

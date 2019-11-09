@@ -1,5 +1,5 @@
-<section class="login">
-  <form (submit)="tryLogin()" [formGroup]="credentialsFormControls">
+<section class="login centered">
+  <form class="centered" (submit)="tryLogin()" [formGroup]="credentialsFormControls">
       <mat-form-field appearance="outline">
         <input matInput placeholder="email" type="text" formControlName="username">
       </mat-form-field>

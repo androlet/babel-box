@@ -1,4 +1,4 @@
-<section class="exercise-translation">
+<section class="exercise-translation centered">
   <button class="next-exercise-button" mat-raised-button color="primary" (click)="loadNewQcm()">Next</button>
   <app-qcm *ngIf="isLoaded()" [questionExo]="questionExo"></app-qcm>
   <mat-spinner *ngIf="isLoading()"></mat-spinner>
