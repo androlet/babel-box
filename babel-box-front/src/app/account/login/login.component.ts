@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
 export class LoginComponent extends BaseComponent implements OnInit {
 
   credentialsFormControls = new FormGroup({
-    username: new FormControl('test@yopmail.com', [Validators.required, Validators.email]),
-    password: new FormControl('password', Validators.required)
+    username: new FormControl(null, [Validators.required, Validators.email]),
+    password: new FormControl(null, Validators.required)
   });
 
   private credentialsInvalid = false;
