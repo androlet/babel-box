@@ -4,6 +4,7 @@ import { LoginComponent } from './account/login/login.component';
 import { SearchTranslationsComponent } from './search/search-translations/search-translations.component';
 import { ExerciseTranslationsComponent } from './exercises/exercise-translations/exercise-translations.component';
 import { FrontOfficeComponent } from './layouts/front-office/front-office.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
+  providers: [Location, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
