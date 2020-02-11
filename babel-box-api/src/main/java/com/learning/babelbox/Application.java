@@ -34,8 +34,20 @@ import static java.util.Arrays.asList;
 @Profile("server")
 public class Application {
 
+    @Value("${database.address}")
+    private String address;
+
+    @Value("${database.port}")
+    private String port;
+
     @Value("${database.name}")
     private String databaseName;
+
+    @Value("${database.username}")
+    private String userName;
+
+    @Value("${database.userpassword}")
+    private String userPassword;
 
     private String[] packagesToScanPath = {
             "com.learning.babelbox.features",
@@ -46,9 +58,9 @@ public class Application {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setUrl("jdbc:postgresql://localhost:5432/" + databaseName);
-        ds.setUsername("thomas");
-        ds.setPassword("sa");
+        ds.setUrl("jdbc:postgresql://"+ address +":"+ port +"/" + databaseName);
+        ds.setUsername(userName);
+        ds.setPassword(userPassword);
         ds.setDriverClassName("org.postgresql.Driver");
         return ds;
     }
