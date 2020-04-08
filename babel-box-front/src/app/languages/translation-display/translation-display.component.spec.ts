@@ -1,7 +1,7 @@
 import {TranslationResults} from '../../search/domain/translation-results';
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LanguagesModuleTesting, TranslationDisplayComponentTesting } from '../languages.module.testing';
+import { LanguagesModuleTesting, TranslationDisplayComponentTested } from '../languages.module.testing';
 import { TranslationDisplayComponent } from './translation-display.component';
 
 
@@ -36,7 +36,7 @@ describe('TranslationDisplayComponent', () => {
       imports: [LanguagesModuleTesting]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TranslationDisplayComponentTesting);
+    fixture = TestBed.createComponent(TranslationDisplayComponentTested);
     component = fixture.componentInstance;
   });
 

@@ -8,20 +8,20 @@ import {TranslationDisplayComponent} from './translation-display/translation-dis
   selector: 'app-languages-selector',
   template: ''
 })
-export class LanguagesSelectorComponentTesting extends LanguagesSelectorComponent {}
+export class LanguagesSelectorComponentTested extends LanguagesSelectorComponent {}
 
 @Component({
   selector: 'app-languages-selector',
   template: ''
 })
-export class TranslationDisplayComponentTesting extends TranslationDisplayComponent {}
+export class TranslationDisplayComponentTested extends TranslationDisplayComponent {}
 
 @NgModule({
-  declarations: [LanguagesSelectorComponentTesting, TranslationDisplayComponentTesting],
+  declarations: [LanguagesSelectorComponentTested, TranslationDisplayComponentTested],
   imports: [
     LanguagesModule,
     HttpClientTestingModule
   ],
-  exports: [LanguagesSelectorComponentTesting, TranslationDisplayComponentTesting]
+  exports: [LanguagesSelectorComponentTested, TranslationDisplayComponentTested]
 })
 export class LanguagesModuleTesting { }

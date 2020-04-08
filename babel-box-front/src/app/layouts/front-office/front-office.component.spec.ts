@@ -1,21 +1,20 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FrontOfficeComponentTested, LayoutsModuleTesting } from '../layouts.module.testing';
 
-import { FrontOfficeComponent } from './front-office.component';
-
-xdescribe('FrontOfficeComponent', () => {
-  let component: FrontOfficeComponent;
-  let fixture: ComponentFixture<FrontOfficeComponent>;
+describe('FrontOfficeComponent', () => {
+  let component: FrontOfficeComponentTested;
+  let fixture: ComponentFixture<FrontOfficeComponentTested>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FrontOfficeComponent ]
+      imports: [ LayoutsModuleTesting ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FrontOfficeComponent);
+    fixture = TestBed.createComponent(FrontOfficeComponentTested);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

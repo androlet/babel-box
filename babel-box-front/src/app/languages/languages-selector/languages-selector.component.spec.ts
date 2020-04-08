@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {LanguagesModuleTesting, LanguagesSelectorComponentTesting} from '../languages.module.testing';
+import {LanguagesModuleTesting, LanguagesSelectorComponentTested} from '../languages.module.testing';
 import {HttpTestingController} from '@angular/common/http/testing';
 import {BABELBOX_API_ROOT} from '../../constants';
 
@@ -20,8 +20,8 @@ const languageOptions = [
 ];
 
 describe('LanguagesSelectorComponent', () => {
-  let component: LanguagesSelectorComponentTesting;
-  let fixture: ComponentFixture<LanguagesSelectorComponentTesting>;
+  let component: LanguagesSelectorComponentTested;
+  let fixture: ComponentFixture<LanguagesSelectorComponentTested>;
   let mockHttp: HttpTestingController;
 
   const expectOption = (option, code, isOriginal, isTarget) => {
@@ -35,7 +35,7 @@ describe('LanguagesSelectorComponent', () => {
       imports: [LanguagesModuleTesting]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LanguagesSelectorComponentTesting);
+    fixture = TestBed.createComponent(LanguagesSelectorComponentTested);
     component = fixture.componentInstance;
 
     mockHttp = TestBed.get(HttpTestingController);
