@@ -1,10 +1,11 @@
-import {Component, NgModule} from '@angular/core';
+import { Component, NgModule, Injectable } from '@angular/core';
 import {LoginComponent} from './login/login.component';
 import {AccountService} from './account.service';
 import {AccountModule} from './account.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 
+@Injectable()
 export class RouterMock {
   private currentUrl = 'initial';
 

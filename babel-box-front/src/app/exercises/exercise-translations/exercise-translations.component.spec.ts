@@ -16,7 +16,7 @@ describe('ExerciseTranslationsComponent', () => {
       imports: [ExercisesModuleTesting]
     })
     .compileComponents();
-    mockHttp = TestBed.get(HttpTestingController);
+    mockHttp = TestBed.inject(HttpTestingController);
   }));
 
   beforeEach(() => {

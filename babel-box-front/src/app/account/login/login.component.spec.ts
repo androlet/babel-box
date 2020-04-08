@@ -21,8 +21,8 @@ describe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponentTested);
     component = fixture.componentInstance;
 
-    mockRouter = TestBed.get(Router);
-    mockHttp = TestBed.get(HttpTestingController);
+    mockRouter = TestBed.inject(Router) as unknown as RouterMock;
+    mockHttp = TestBed.inject(HttpTestingController);
   }));
 
   it('should create', () => {

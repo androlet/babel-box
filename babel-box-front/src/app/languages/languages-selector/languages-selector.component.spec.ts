@@ -38,7 +38,7 @@ describe('LanguagesSelectorComponent', () => {
     fixture = TestBed.createComponent(LanguagesSelectorComponentTested);
     component = fixture.componentInstance;
 
-    mockHttp = TestBed.get(HttpTestingController);
+    mockHttp = TestBed.inject(HttpTestingController);
   });
 
   it('should create', () => {

@@ -34,7 +34,7 @@ describe('SearchInputComponent', () => {
     fixture = TestBed.createComponent(SearchInputComponentTested);
     component = fixture.componentInstance;
 
-    mockHttp = TestBed.get(HttpTestingController);
+    mockHttp = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
   });
 
