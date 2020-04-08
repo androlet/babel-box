@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 import { QcmExercise } from '../domain/exercises';
 import { BABELBOX_API_ROOT } from 'src/app/constants';
