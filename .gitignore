@@ -3,6 +3,7 @@
 # compiled output
 */node
 */dist
+*/e2e
 */tmp
 */out-tsc
 */target/*
@@ -20,13 +21,14 @@
 *.launch
 .settings/
 *.sublime-workspace
+.editorconfig
 
 # IDE - VSCode
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+#!.vscode/settings.json
+#!.vscode/tasks.json
+#!.vscode/launch.json
+#!.vscode/extensions.json
 
 # misc
 /.sass-cache
