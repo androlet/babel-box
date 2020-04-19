@@ -91,7 +91,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>copy-resources</id>
+                        <id>copy-front-resources</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -103,6 +103,24 @@
                                     <directory>${project.parent.basedir}/babel-box-front/dist/babel-box-front/</directory>
                                 </resource>
                             </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.coderplus.maven.plugins</groupId>
+                <artifactId>copy-rename-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-file</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <sourceFile>${project.build.directory}/babel-box-api-1.0-SNAPSHOT.jar</sourceFile>
+                            <destinationFile>${project.parent.basedir}/ci-cd/babelbox.jar</destinationFile>
                         </configuration>
                     </execution>
                 </executions>

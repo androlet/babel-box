@@ -10,6 +10,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>babel-box-front</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+    <module>babel-box-cd</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

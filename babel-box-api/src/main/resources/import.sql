@@ -4,5 +4,5 @@ INSERT INTO language (id, version, local_code) VALUES
 (3, 0, 'es'),
 (4, 0, 'it');
 
-INSERT INTO app_user (id, version, pseudo, email, password) VALUES
-(1, 0, 'test', 'test@yopmail.com', 'password');
+INSERT INTO users (id, version, pseudo, email, password, isactive) VALUES
+(1, 0, 'test', 'test@yopmail.com', 'password', true);
